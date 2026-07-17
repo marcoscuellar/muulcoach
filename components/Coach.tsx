@@ -121,7 +121,7 @@ export default function Coach() {
           <MuulMarkVolt size={20} radius={5} />
         </div>
         <div className="min-w-0">
-          <div className="font-display text-[15px] font-semibold">{COACH_NAME}</div>
+          <div className="font-coach text-[16px] font-extrabold uppercase tracking-[-0.01em]">{COACH_NAME}</div>
           <div className="font-mono text-[10px] tracking-[0.06em] text-muted-fog">
             {profile ? `${profile.style.toUpperCase()} · IN YOUR CORNER` : "IN YOUR CORNER"}
           </div>

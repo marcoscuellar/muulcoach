@@ -1,6 +1,14 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Instrument_Sans, Space_Mono } from "next/font/google";
+import { Space_Grotesk, Instrument_Sans, Space_Mono, Archivo } from "next/font/google";
 import "./globals.css";
+
+// Coach Bob's voice gets a heavier, more commanding face than the brand font.
+const archivo = Archivo({
+  subsets: ["latin"],
+  weight: ["700", "800", "900"],
+  variable: "--font-coach",
+  display: "swap",
+});
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -32,7 +40,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${spaceGrotesk.variable} ${instrumentSans.variable} ${spaceMono.variable}`}>
+    <html lang="en" className={`${spaceGrotesk.variable} ${instrumentSans.variable} ${spaceMono.variable} ${archivo.variable}`}>
       <body>{children}</body>
     </html>
   );

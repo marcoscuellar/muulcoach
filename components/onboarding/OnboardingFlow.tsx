@@ -58,7 +58,7 @@ export default function OnboardingFlow() {
           {step === "welcome" && (
             <div>
               <div className="mb-2 font-mono text-[11px] tracking-[0.1em] text-olive">MEET YOUR COACH</div>
-              <h1 className="font-display text-[30px] font-bold leading-[1.15] tracking-[-0.02em]">
+              <h1 className="font-coach text-[34px] font-black uppercase leading-[1.02] tracking-[-0.02em]">
                 Hey — I&apos;m {COACH_NAME}.
               </h1>
               <p className="mt-3 text-[16px] leading-[1.5] text-muted-deep">

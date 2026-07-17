@@ -52,6 +52,7 @@ const config: Config = {
         display: ["var(--font-space-grotesk)", "sans-serif"],
         body: ["var(--font-instrument-sans)", "system-ui", "sans-serif"],
         mono: ["var(--font-space-mono)", "monospace"],
+        coach: ["var(--font-coach)", "var(--font-space-grotesk)", "sans-serif"], // Coach Bob's stronger voice
       },
       borderRadius: {
         btn: "10px",
