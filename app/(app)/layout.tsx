@@ -1,5 +1,6 @@
 import Sidebar from "@/components/Sidebar";
 import TopBar from "@/components/TopBar";
+import OnboardingGate from "@/components/onboarding/OnboardingGate";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -7,7 +8,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       <Sidebar />
       <main className="flex flex-col overflow-y-auto">
         <TopBar />
-        <div className="min-h-0 flex-1">{children}</div>
+        <div className="min-h-0 flex-1">
+          <OnboardingGate>{children}</OnboardingGate>
+        </div>
       </main>
     </div>
   );

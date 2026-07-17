@@ -16,17 +16,26 @@ export const WINGMAN_STORAGE_KEY = "muul-wingman-v1";
 
 export type SubTask = { id: string; text: string; done: boolean };
 export type GoalState = "active" | "draft" | "paused";
+export type ProgressLog = { id: string; at: number; note: string };
 
 export type Goal = {
   id: string;
   title: string;
-  microAction: string; // "" while a goal is still a Draft
+  microAction: string; // "" while a goal is still a Draft (the first physical step)
   state: GoalState;
   done: boolean;
   createdAt: number;
   checkInAt: number | null; // deadline / check-in timestamp (ms)
-  subTasks: SubTask[];
+  subTasks: SubTask[]; // milestones
+  outcome?: string; // the actual result we're chasing
+  cadence?: string; // the schedule, e.g. "Mon/Wed/Fri, 20 min"
+  logs?: ProgressLog[]; // how progress gets logged
 };
+
+// CommitmentThresholdLogic guardrail: keep the active list small so Coach Bob
+// can hold the user to what actually matters. Soft target 3, hard ceiling 4.
+export const ACTIVE_GOAL_SOFT_CAP = 3;
+export const ACTIVE_GOAL_HARD_CAP = 4;
 
 export type DepartureAlarm = {
   id: string;
@@ -66,6 +75,32 @@ export function computeGoTime(eventAt: number, baseMinutes: number) {
   return { bufferedMinutes, goAt };
 }
 
+// ---- Shared read helpers (so Coach Bob's office can see the plan) ----------
+
+export function loadGoals(): Goal[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = JSON.parse(localStorage.getItem(WINGMAN_STORAGE_KEY) || "{}");
+    return Array.isArray(raw.goals) ? (raw.goals as Goal[]) : [];
+  } catch {
+    return [];
+  }
+}
+
+/** Compact, prompt-friendly summary of active goals for Coach Bob's context. */
+export function goalsSummary(goals: Goal[]): string {
+  const active = goals.filter((g) => g.state === "active" && !g.done);
+  if (!active.length) return "";
+  return active
+    .map((g) => {
+      const bits = [`- ${g.title}`];
+      if (g.microAction) bits.push(`(first step: ${g.microAction})`);
+      if (isStuck(g)) bits.push("[STUCK — missed check-in]");
+      return bits.join(" ");
+    })
+    .join("\n");
+}
+
 // ===========================================================================
 // PersonaConstraints + all Wingman copy.
 // Edit strings here to retune the voice. Functions take data, return a line.
@@ -74,9 +109,13 @@ export function computeGoTime(eventAt: number, baseMinutes: number) {
 export const WINGMAN = {
   // ---- PersonaConstraints -------------------------------------------------
   persona: {
-    tagline: "Your Wingman. Not a nag, not a therapist — the person in your corner who keeps you moving.",
+    tagline: "Coach Bob here. Not a nag, not a therapist — the person in your corner who keeps you moving.",
     // Every interaction ends with a clear path to the next physical action.
     nextMoveNudge: "What's the move?",
+    // CommitmentThresholdLogic guardrail copy
+    atSoftCap: "You've got three going. That's the sweet spot — let's finish something before we add more.",
+    atHardCap: "Four's the ceiling. Something has to close or pause before a new one opens. What are we finishing first?",
+    goToOffice: "Talk to Coach Bob",
   },
 
   // ---- CommitmentThresholdLogic ------------------------------------------
@@ -86,6 +125,15 @@ export const WINGMAN = {
     titlePlaceholder: "e.g., Ship the pricing page",
     microLabel: "What's the ONE physical, low-activation step you can do for this today?",
     microPlaceholder: "e.g., open the file and write one ugly sentence",
+    // Richer plan fields (optional) — outcome + cadence + logging.
+    outcomeLabel: "What does DONE actually look like? (optional)",
+    outcomePlaceholder: "e.g., pricing page live and shared with the team",
+    cadenceLabel: "When / how often? (optional)",
+    cadencePlaceholder: "e.g., Mon/Wed/Fri, 20 min before lunch",
+    logCta: "Log progress",
+    logPlaceholder: "What did you actually do?",
+    logSaved: "Logged. That's the streak — receipts, not vibes.",
+    loggedCount: (n: number) => `${n} logged`,
     rule: "Goals that can't name a first move don't get to sit in Active. That's the deal — it keeps this list honest.",
     ctaActive: "Lock it in →",
     ctaDraft: "No first move yet — park it in Drafts",

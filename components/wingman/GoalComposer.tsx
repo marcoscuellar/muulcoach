@@ -14,11 +14,13 @@ import { WINGMAN } from "@/lib/wingman";
 export default function GoalComposer({
   onCreate,
 }: {
-  onCreate: (title: string, microAction: string) => void; // microAction "" => Draft
+  onCreate: (title: string, microAction: string, outcome: string, cadence: string) => void; // micro "" => Draft
 }) {
   const c = WINGMAN.commitment;
   const [title, setTitle] = useState("");
   const [micro, setMicro] = useState("");
+  const [outcome, setOutcome] = useState("");
+  const [cadence, setCadence] = useState("");
 
   const canSave = title.trim().length > 0;
   const hasMicro = micro.trim().length > 0;
@@ -26,9 +28,11 @@ export default function GoalComposer({
   const submit = (asDraft: boolean) => {
     if (!canSave) return;
     // CommitmentThresholdLogic: no micro-action (or explicit draft) => Draft state.
-    onCreate(title.trim(), asDraft ? "" : micro.trim());
+    onCreate(title.trim(), asDraft ? "" : micro.trim(), outcome, cadence);
     setTitle("");
     setMicro("");
+    setOutcome("");
+    setCadence("");
   };
 
   return (
@@ -56,6 +60,28 @@ export default function GoalComposer({
             className="min-h-[64px] w-full resize-y rounded-[10px] border-[1.5px] border-muted-line bg-paper px-3 py-[11px] text-[15px] leading-[1.45] text-ink"
           />
           <div className="mt-2 text-[12px] leading-[1.5] text-muted-fog">{c.rule}</div>
+        </div>
+
+        {/* Optional plan fields: the outcome + the cadence */}
+        <div className="grid grid-cols-2 gap-3 max-[640px]:grid-cols-1">
+          <div>
+            <div className="mb-1 font-mono text-[10px] tracking-[0.06em] text-muted-fog">{c.outcomeLabel}</div>
+            <input
+              value={outcome}
+              onChange={(e) => setOutcome(e.target.value)}
+              placeholder={c.outcomePlaceholder}
+              className="w-full rounded-[10px] border-[1.5px] border-muted-line bg-paper px-3 py-[10px] text-[14px] text-ink"
+            />
+          </div>
+          <div>
+            <div className="mb-1 font-mono text-[10px] tracking-[0.06em] text-muted-fog">{c.cadenceLabel}</div>
+            <input
+              value={cadence}
+              onChange={(e) => setCadence(e.target.value)}
+              placeholder={c.cadencePlaceholder}
+              className="w-full rounded-[10px] border-[1.5px] border-muted-line bg-paper px-3 py-[10px] text-[14px] text-ink"
+            />
+          </div>
         </div>
 
         <div className="flex flex-wrap items-center gap-3">

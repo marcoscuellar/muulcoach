@@ -4,12 +4,15 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   WINGMAN,
   WINGMAN_STORAGE_KEY,
+  ACTIVE_GOAL_HARD_CAP,
+  ACTIVE_GOAL_SOFT_CAP,
   newId,
   fmtTime,
   isStuck,
   type Goal,
   type DepartureAlarm,
 } from "@/lib/wingman";
+import { loadProfile, COACH_NAME, type Profile } from "@/lib/profile";
 import GoalComposer from "./GoalComposer";
 import GoalCard from "./GoalCard";
 import CalibrationModal from "./CalibrationModal";
@@ -35,6 +38,8 @@ export default function WingmanBoard() {
   const [alarms, setAlarms] = useState<DepartureAlarm[]>([]);
   const [auditing, setAuditing] = useState<Goal | null>(null);
   const [hydrated, setHydrated] = useState(false);
+  const [profile, setProfile] = useState<Profile | null>(null);
+  const [capMsg, setCapMsg] = useState<string | null>(null);
   const [, forceTick] = useState(0);
   const timers = useRef<Record<string, ReturnType<typeof setTimeout>>>({});
 
@@ -47,6 +52,7 @@ export default function WingmanBoard() {
     } catch {
       /* ignore */
     }
+    setProfile(loadProfile());
     setHydrated(true);
   }, []);
 
@@ -72,29 +78,49 @@ export default function WingmanBoard() {
     );
   }, []);
 
-  // ---- CommitmentThresholdLogic ----------------------------------------
-  const createGoal = (title: string, microAction: string) => {
-    // No micro-action => forced into Draft (hidden from Active view).
+  const activeCount = () => goals.filter((g) => g.state === "active" && !g.done).length;
+
+  // ---- CommitmentThresholdLogic + goal guardrail -----------------------
+  const createGoal = (title: string, microAction: string, outcome: string, cadence: string) => {
     const hasMicro = microAction.trim().length > 0;
+    // Guardrail: never let the active list exceed the hard ceiling.
+    if (hasMicro && activeCount() >= ACTIVE_GOAL_HARD_CAP) {
+      setCapMsg(WINGMAN.persona.atHardCap);
+      return;
+    }
     const goal: Goal = {
       id: newId(),
       title,
       microAction: microAction.trim(),
-      state: hasMicro ? "active" : "draft",
+      state: hasMicro ? "active" : "draft", // no first move => Draft (hidden from Active)
       done: false,
       createdAt: Date.now(),
-      // Active goals get a same-day check-in so the Calibration Protocol has a deadline to miss.
       checkInAt: hasMicro ? endOfToday() : null,
       subTasks: [],
+      outcome: outcome.trim() || undefined,
+      cadence: cadence.trim() || undefined,
+      logs: [],
     };
     setGoals((gs) => [goal, ...gs]);
+    setCapMsg(hasMicro && activeCount() + 1 >= ACTIVE_GOAL_SOFT_CAP ? WINGMAN.persona.atSoftCap : null);
   };
 
   // Promote a Draft into Active by supplying its missing first move.
   const promoteDraft = (id: string, microAction: string) => {
     if (!microAction.trim()) return;
+    if (activeCount() >= ACTIVE_GOAL_HARD_CAP) {
+      setCapMsg(WINGMAN.persona.atHardCap);
+      return;
+    }
     patchGoal(id, { microAction: microAction.trim(), state: "active", checkInAt: endOfToday() });
   };
+
+  // Progress logging — receipts that a goal actually got worked.
+  const addLog = (id: string, note: string) =>
+    patchGoal(id, (g) => ({
+      ...g,
+      logs: [{ id: newId(), at: Date.now(), note: note.trim() }, ...(g.logs ?? [])],
+    }));
 
   // ---- CalibrationProtocol handlers ------------------------------------
   const pauseGoal = (id: string) => patchGoal(id, { state: "paused" });
@@ -154,10 +180,23 @@ export default function WingmanBoard() {
 
   return (
     <div className="flex flex-col gap-5 px-[34px] py-8">
-      {/* Persona intro */}
+      {/* Coach Bob intro */}
       <div className="rounded-panel border border-muted-line bg-ink p-6 text-onink">
-        <div className="font-mono text-[11px] tracking-[0.08em] text-volt">WINGMAN</div>
-        <p className="mt-2 max-w-[640px] text-[15px] leading-[1.5]">{WINGMAN.persona.tagline}</p>
+        <div className="flex items-center justify-between">
+          <div className="font-mono text-[11px] tracking-[0.08em] text-volt">COACH BOB · THE PLAN</div>
+          <span className="font-mono text-[11px] text-onink-faint">
+            {active.length}/{ACTIVE_GOAL_SOFT_CAP} active
+          </span>
+        </div>
+        <p className="mt-2 max-w-[640px] text-[15px] leading-[1.5]">
+          {profile?.name && profile.name !== "friend" ? `${profile.name} — ` : ""}
+          {WINGMAN.persona.tagline} Three goals, max. Let&apos;s make them count.
+        </p>
+        {capMsg && (
+          <div className="mt-3 rounded-[10px] bg-flare/15 px-4 py-2 text-[13px] leading-[1.4] text-[#ffb9a3]">
+            {capMsg}
+          </div>
+        )}
         {stuckCount > 0 && (
           <div className="mt-3 inline-flex items-center gap-2 rounded-full bg-flare/15 px-3 py-1 font-mono text-[11px] font-bold text-flare">
             {stuckCount} stuck · we should check in
@@ -185,6 +224,7 @@ export default function WingmanBoard() {
                 onToggleSub={toggleSub}
                 onToggleDone={toggleDone}
                 onResume={resumeGoal}
+                onLog={addLog}
               />
             ))}
           </div>
@@ -200,6 +240,7 @@ export default function WingmanBoard() {
                   onToggleSub={toggleSub}
                   onToggleDone={toggleDone}
                   onResume={resumeGoal}
+                  onLog={addLog}
                 />
               ))}
             </div>

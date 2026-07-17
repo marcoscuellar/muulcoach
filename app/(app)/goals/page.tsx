@@ -1,5 +1,5 @@
 import WingmanBoard from "@/components/wingman/WingmanBoard";
 
-export default function WingmanPage() {
+export default function GoalsPage() {
   return <WingmanBoard />;
 }

@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { MuulMarkVolt } from "@/components/icons";
 import Tag from "@/components/Tag";
+import CoachBobHomeCard from "@/components/CoachBobHomeCard";
 import { STREAK_DAYS, UP_NEXT, HOME_HEAT } from "@/lib/data";
 
 export default function HomePage() {
@@ -81,22 +81,7 @@ export default function HomePage() {
         </div>
 
         <div className="flex flex-col gap-4">
-          <div className="rounded-card bg-ink p-[22px]">
-            <div className="mb-3 flex items-center gap-[9px]">
-              <MuulMarkVolt />
-              <span className="font-mono text-[11px] text-volt">COACH</span>
-            </div>
-            <p className="m-0 mb-4 text-[15px] leading-[1.5] text-onink">
-              You&apos;re one post ahead of last week — nice. Lock Friday&apos;s pitch now and you&apos;ll hit your
-              monthly goal early.
-            </p>
-            <Link
-              href="/coach"
-              className="inline-block rounded-[10px] border-none bg-volt px-4 py-[9px] font-display text-[13px] font-bold text-ink"
-            >
-              Talk to coach
-            </Link>
-          </div>
+          <CoachBobHomeCard />
           <div className="rounded-card border border-muted-line bg-surface p-[22px]">
             <div className="mb-[14px] font-mono text-[11px] text-muted-fog">CONSISTENCY · 6 WKS</div>
             <div className="grid grid-cols-6 gap-[6px]">

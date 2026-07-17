@@ -21,8 +21,8 @@ const NAV = [
   { href: "/composer", label: "Composer", Icon: ComposeIcon },
   { href: "/trending", label: "Trending", Icon: TrendingIcon },
   { href: "/calendar", label: "Calendar", Icon: CalendarIcon },
-  { href: "/coach", label: "Coach", Icon: CoachIcon },
-  { href: "/wingman", label: "Wingman", Icon: WingmanIcon },
+  { href: "/coach", label: "Coach Bob", Icon: CoachIcon },
+  { href: "/goals", label: "Goals", Icon: WingmanIcon },
   { href: "/analytics", label: "Analytics", Icon: AnalyticsIcon },
   { href: "/library", label: "Library", Icon: LibraryIcon },
 ];
