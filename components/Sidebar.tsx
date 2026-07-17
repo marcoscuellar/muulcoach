@@ -11,6 +11,7 @@ import {
   CoachIcon,
   AnalyticsIcon,
   LibraryIcon,
+  WingmanIcon,
 } from "@/components/icons";
 import { STREAK_DAYS } from "@/lib/data";
 import { DEFAULT_AUTHOR_NAME, DEFAULT_AUTHOR_TITLE } from "@/lib/prompts";
@@ -21,6 +22,7 @@ const NAV = [
   { href: "/trending", label: "Trending", Icon: TrendingIcon },
   { href: "/calendar", label: "Calendar", Icon: CalendarIcon },
   { href: "/coach", label: "Coach", Icon: CoachIcon },
+  { href: "/wingman", label: "Wingman", Icon: WingmanIcon },
   { href: "/analytics", label: "Analytics", Icon: AnalyticsIcon },
   { href: "/library", label: "Library", Icon: LibraryIcon },
 ];

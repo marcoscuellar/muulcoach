@@ -69,6 +69,13 @@ export const PlusIcon = (p: IconProps) => (
   </Base>
 );
 
+export const WingmanIcon = (p: IconProps) => (
+  <Base {...p}>
+    <circle cx="12" cy="12" r="8" />
+    <circle cx="12" cy="12" r="3.5" />
+  </Base>
+);
+
 /** The Muul chevron mark — momentum + the streak you protect. */
 export function MuulMark({ size = 32, radius = 9 }: { size?: number; radius?: number }) {
   const chevron = Math.round(size * 0.31);

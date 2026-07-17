@@ -11,6 +11,7 @@ const TITLE_MAP: Record<string, [string, string]> = {
   "/trending": ["Trending", "What’s hot right now + your daily brief"],
   "/calendar": ["Calendar", "Week of July 13"],
   "/coach": ["Coach", "Accountability mode"],
+  "/wingman": ["Wingman", "Direct. Empathetic. Action-first."],
   "/analytics": ["Analytics", "Proof the streak is working"],
   "/library": ["Library", "Every post you’ve shipped"],
 };
