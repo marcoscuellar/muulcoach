@@ -16,13 +16,17 @@ import {
 import { STREAK_DAYS } from "@/lib/data";
 import { DEFAULT_AUTHOR_NAME, DEFAULT_AUTHOR_TITLE } from "@/lib/prompts";
 
-const NAV = [
+// Coach Bob is the main feature — the coaching core leads, the LinkedIn
+// content tools sit underneath as a supporting toolbox.
+const PRIMARY_NAV = [
   { href: "/", label: "Home", Icon: HomeIcon },
+  { href: "/coach", label: "Coach Bob", Icon: CoachIcon, star: true },
+  { href: "/goals", label: "Goals", Icon: WingmanIcon },
+];
+const CONTENT_NAV = [
   { href: "/composer", label: "Composer", Icon: ComposeIcon },
   { href: "/trending", label: "Trending", Icon: TrendingIcon },
   { href: "/calendar", label: "Calendar", Icon: CalendarIcon },
-  { href: "/coach", label: "Coach Bob", Icon: CoachIcon },
-  { href: "/goals", label: "Goals", Icon: WingmanIcon },
   { href: "/analytics", label: "Analytics", Icon: AnalyticsIcon },
   { href: "/library", label: "Library", Icon: LibraryIcon },
 ];
@@ -50,7 +54,27 @@ export default function Sidebar() {
       </div>
 
       <nav className="flex flex-col gap-1">
-        {NAV.map(({ href, label, Icon }) => {
+        {PRIMARY_NAV.map(({ href, label, Icon, star }) => {
+          const active = isActive(href);
+          return (
+            <Link
+              key={href}
+              href={href}
+              className={`flex w-full items-center gap-[11px] rounded-btn px-[13px] py-[11px] text-left font-display text-sm font-semibold transition-colors ${
+                active ? "bg-ink text-paper" : "bg-transparent text-ink hover:bg-surface"
+              }`}
+            >
+              <Icon />
+              {label}
+              {star && !active && <span className="ml-auto h-[7px] w-[7px] rounded-full bg-volt" />}
+            </Link>
+          );
+        })}
+
+        <div className="mb-1 mt-4 px-[13px] font-mono text-[10px] tracking-[0.1em] text-muted-sage">
+          LINKEDIN TOOLBOX
+        </div>
+        {CONTENT_NAV.map(({ href, label, Icon }) => {
           const active = isActive(href);
           return (
             <Link

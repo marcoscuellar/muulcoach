@@ -66,9 +66,9 @@ export const REFINES: Refine[] = [
 ];
 
 export const COACH_CHIPS: string[] = [
-  "I don't know what to post",
-  "Give me a hook for today",
+  "I don't know where to start",
   "I'm behind this week",
+  "Give me one small win",
 ];
 
 export const DEFAULT_FIELD = "B2B sales & go-to-market consulting";
