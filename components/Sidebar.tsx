@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  MuulMark,
+  MuulMarkVolt,
   HomeIcon,
   ComposeIcon,
   TrendingIcon,
@@ -59,10 +59,10 @@ export default function Sidebar({ userEmail, demo = false }: { userEmail?: strin
   const subline = userEmail || "Not signed in";
 
   return (
-    <aside className="flex flex-col gap-[26px] border-r border-muted-line bg-paper px-4 py-[22px]">
+    <aside className="flex flex-col gap-[26px] border-r border-white/10 bg-ink px-4 py-[22px] text-onink">
       <div className="flex items-center gap-[11px] px-2 py-1">
-        <MuulMark />
-        <span className="font-display text-[19px] font-bold tracking-[-0.02em]">Coach Bob</span>
+        <MuulMarkVolt size={32} />
+        <span className="font-display text-[19px] font-bold tracking-[-0.02em] text-white">Coach Bob</span>
       </div>
 
       <nav className="flex flex-col gap-1">
@@ -73,7 +73,7 @@ export default function Sidebar({ userEmail, demo = false }: { userEmail?: strin
               key={href}
               href={href}
               className={`flex w-full items-center gap-[11px] rounded-btn px-[13px] py-[11px] text-left font-display text-sm font-semibold transition-colors ${
-                active ? "bg-ink text-paper" : "bg-transparent text-ink hover:bg-surface"
+                active ? "bg-volt text-white" : "bg-paper text-volt hover:bg-surface"
               }`}
             >
               <Icon />
@@ -83,7 +83,7 @@ export default function Sidebar({ userEmail, demo = false }: { userEmail?: strin
           );
         })}
 
-        <div className="mb-1 mt-4 px-[13px] font-mono text-[10px] tracking-[0.1em] text-muted-sage">
+        <div className="mb-1 mt-4 px-[13px] font-mono text-[10px] tracking-[0.1em] text-onink-faint">
           LINKEDIN TOOLBOX
         </div>
         {CONTENT_NAV.map(({ href, label, Icon }) => {
@@ -93,7 +93,7 @@ export default function Sidebar({ userEmail, demo = false }: { userEmail?: strin
               key={href}
               href={href}
               className={`flex w-full items-center gap-[11px] rounded-btn px-[13px] py-[11px] text-left font-display text-sm font-semibold transition-colors ${
-                active ? "bg-ink text-paper" : "bg-transparent text-ink hover:bg-surface"
+                active ? "bg-volt text-white" : "bg-paper text-volt hover:bg-surface"
               }`}
             >
               <Icon />
@@ -104,12 +104,12 @@ export default function Sidebar({ userEmail, demo = false }: { userEmail?: strin
       </nav>
 
       <div className="mt-auto flex flex-col gap-[14px]">
-        <div className="rounded-card bg-ink p-4">
-          <div className="flex items-center gap-2 font-display text-[15px] font-bold text-white">
-            <span className="h-2 w-2 rounded-full bg-white" />
+        <div className="rounded-card bg-paper p-4">
+          <div className="flex items-center gap-2 font-display text-[15px] font-bold text-volt">
+            <span className="h-2 w-2 rounded-full bg-volt" />
             {demo ? `${STREAK_DAYS}-day streak` : "Start your streak"}
           </div>
-          <div className="mt-2 font-mono text-[10px] tracking-[0.04em] text-onink-faint">
+          <div className="mt-2 font-mono text-[10px] tracking-[0.04em] text-muted-fog">
             {demo ? "POST TODAY TO KEEP IT" : "POST TODAY TO BEGIN IT"}
           </div>
         </div>
@@ -119,8 +119,8 @@ export default function Sidebar({ userEmail, demo = false }: { userEmail?: strin
             {initials(displayName)}
           </div>
           <div className="min-w-0 flex-1 overflow-hidden">
-            <div className="truncate font-display text-[13px] font-semibold capitalize">{displayName}</div>
-            <div className="truncate text-[11px] text-muted-fog">{subline}</div>
+            <div className="truncate font-display text-[13px] font-semibold capitalize text-white">{displayName}</div>
+            <div className="truncate text-[11px] text-onink-faint">{subline}</div>
           </div>
           {userEmail && <SignOutButton />}
         </div>

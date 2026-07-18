@@ -21,9 +21,9 @@ export default function DemoToggle({ demo }: { demo: boolean }) {
     <button
       onClick={toggle}
       title="Show sample data for demos"
-      className="flex items-center justify-between rounded-[10px] border border-muted-line bg-surface px-3 py-[9px]"
+      className="flex items-center justify-between rounded-[10px] bg-paper px-3 py-[9px]"
     >
-      <span className="font-mono text-[10px] tracking-[0.08em] text-muted-fog">DEMO MODE</span>
+      <span className="font-mono text-[10px] tracking-[0.08em] text-volt">DEMO MODE</span>
       <span
         className={`relative inline-flex h-[18px] w-[32px] flex-none items-center rounded-full transition-colors ${
           demo ? "bg-volt" : "bg-muted-soft"
