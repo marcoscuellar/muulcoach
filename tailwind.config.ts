@@ -49,10 +49,10 @@ const config: Config = {
         },
       },
       fontFamily: {
-        display: ["var(--font-space-grotesk)", "sans-serif"],
+        display: ["var(--font-display)", "sans-serif"], // Archivo, app-wide
         body: ["var(--font-instrument-sans)", "system-ui", "sans-serif"],
         mono: ["var(--font-space-mono)", "monospace"],
-        coach: ["var(--font-coach)", "var(--font-space-grotesk)", "sans-serif"], // Coach Bob's stronger voice
+        coach: ["var(--font-display)", "sans-serif"], // Coach Bob's identity (same face, heavier/uppercase usage)
       },
       borderRadius: {
         btn: "10px",

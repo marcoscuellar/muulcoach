@@ -1,19 +1,12 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Instrument_Sans, Space_Mono, Archivo } from "next/font/google";
+import { Instrument_Sans, Space_Mono, Archivo } from "next/font/google";
 import "./globals.css";
 
-// Coach Bob's voice gets a heavier, more commanding face than the brand font.
+// Archivo is the app-wide display face — strong, commanding, all weights.
 const archivo = Archivo({
   subsets: ["latin"],
-  weight: ["700", "800", "900"],
-  variable: "--font-coach",
-  display: "swap",
-});
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-space-grotesk",
+  weight: ["400", "500", "600", "700", "800", "900"],
+  variable: "--font-display",
   display: "swap",
 });
 
@@ -40,7 +33,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${spaceGrotesk.variable} ${instrumentSans.variable} ${spaceMono.variable} ${archivo.variable}`}>
+    <html lang="en" className={`${archivo.variable} ${instrumentSans.variable} ${spaceMono.variable}`}>
       <body>{children}</body>
     </html>
   );
