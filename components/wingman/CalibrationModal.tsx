@@ -57,7 +57,7 @@ export default function CalibrationModal({
         {/* Header */}
         <div className="flex items-center justify-between border-b border-muted-line px-5 py-4">
           <div className="flex items-center gap-2">
-            <span className="inline-block rounded-full bg-flare/15 px-[10px] py-1 font-mono text-[10px] font-bold tracking-[0.08em] text-flare">
+            <span className="inline-block rounded-full bg-alert/15 px-[10px] py-1 font-mono text-[10px] font-bold tracking-[0.08em] text-alert">
               {k.stuckBadge}
             </span>
             <span className="font-display text-[15px] font-semibold">{goal.title}</span>
@@ -115,7 +115,7 @@ export default function CalibrationModal({
                     onDelete(goal.id); // CalibrationProtocol: re-negotiation → delete
                     onClose();
                   }}
-                  className="rounded-[10px] border-[1.5px] border-flare/40 bg-flare/10 px-4 py-3 text-left font-display text-[14px] font-semibold text-flare"
+                  className="rounded-[10px] border-[1.5px] border-alert/40 bg-alert/10 px-4 py-3 text-left font-display text-[14px] font-semibold text-alert"
                 >
                   {k.goalsChanged.delete}
                 </button>

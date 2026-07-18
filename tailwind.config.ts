@@ -47,6 +47,17 @@ const config: Config = {
         coral: {
           text: "#a13a1a",
         },
+        // Status-only semantics (never decorative): green = on-track/done,
+        // red = missed/needs-action. Per the Coach Bob color system.
+        verified: {
+          DEFAULT: "#5FD97A",
+          tint: "#DDF6E4",
+          deep: "#1E8F46", // readable green for status text on light
+        },
+        alert: {
+          DEFAULT: "#FF5C5C",
+          tint: "#FFE1E1",
+        },
       },
       fontFamily: {
         display: ["var(--font-display)", "sans-serif"], // Archivo, app-wide

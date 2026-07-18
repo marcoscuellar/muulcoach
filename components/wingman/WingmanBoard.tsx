@@ -193,12 +193,12 @@ export default function WingmanBoard() {
           {WINGMAN.persona.tagline} Three goals, max. Let&apos;s make them count.
         </p>
         {capMsg && (
-          <div className="mt-3 rounded-[10px] bg-flare/15 px-4 py-2 text-[13px] leading-[1.4] text-[#ffb9a3]">
+          <div className="mt-3 rounded-[10px] bg-alert/15 px-4 py-2 text-[13px] leading-[1.4] text-alert-tint">
             {capMsg}
           </div>
         )}
         {stuckCount > 0 && (
-          <div className="mt-3 inline-flex items-center gap-2 rounded-full bg-flare/15 px-3 py-1 font-mono text-[11px] font-bold text-flare">
+          <div className="mt-3 inline-flex items-center gap-2 rounded-full bg-alert/15 px-3 py-1 font-mono text-[11px] font-bold text-alert">
             {stuckCount} stuck · we should check in
           </div>
         )}

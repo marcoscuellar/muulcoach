@@ -68,7 +68,7 @@ export default function HomePage() {
                   ) : (
                     <span
                       className={`font-mono text-[10px] ${
-                        item.statusKind === "scheduled" ? "text-olive" : "text-muted-sage"
+                        item.statusKind === "scheduled" ? "text-verified-deep" : "text-muted-sage"
                       }`}
                     >
                       {item.status}

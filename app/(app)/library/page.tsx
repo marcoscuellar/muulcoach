@@ -2,8 +2,8 @@ import Tag from "@/components/Tag";
 import { LIBRARY } from "@/lib/data";
 
 const STATUS_COLOR: Record<string, string> = {
-  POSTED: "text-olive",
-  SCHEDULED: "text-olive",
+  POSTED: "text-verified-deep",
+  SCHEDULED: "text-verified-deep",
   DRAFT: "text-muted-sage",
 };
 

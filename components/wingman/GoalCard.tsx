@@ -46,14 +46,14 @@ export default function GoalCard({
   return (
     <div
       className={`rounded-card border bg-paper p-5 ${
-        ci.stuck ? "border-flare/50" : "border-muted-line"
+        ci.stuck ? "border-alert/50" : "border-muted-line"
       } ${goal.done || paused ? "opacity-60" : ""}`}
     >
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <div className="flex items-center gap-2">
             {ci.stuck && (
-              <span className="inline-block rounded-full bg-flare/15 px-[8px] py-[2px] font-mono text-[9px] font-bold tracking-[0.08em] text-flare">
+              <span className="inline-block rounded-full bg-alert/15 px-[8px] py-[2px] font-mono text-[9px] font-bold tracking-[0.08em] text-alert">
                 {k.stuckBadge}
               </span>
             )}
@@ -89,7 +89,7 @@ export default function GoalCard({
           onClick={() => onToggleDone(goal.id)}
           aria-label="toggle done"
           className={`mt-[2px] flex h-6 w-6 flex-none items-center justify-center rounded-md border-[1.5px] text-[13px] ${
-            goal.done ? "border-olive bg-olive text-paper" : "border-muted-soft text-transparent"
+            goal.done ? "border-verified bg-verified text-ink" : "border-muted-soft text-transparent"
           }`}
         >
           ✓
@@ -107,7 +107,7 @@ export default function GoalCard({
             >
               <span
                 className={`flex h-[18px] w-[18px] flex-none items-center justify-center rounded border-[1.5px] text-[11px] ${
-                  s.done ? "border-olive bg-olive text-paper" : "border-muted-soft text-transparent"
+                  s.done ? "border-verified bg-verified text-ink" : "border-muted-soft text-transparent"
                 }`}
               >
                 ✓
@@ -151,7 +151,7 @@ export default function GoalCard({
       )}
 
       <div className="mt-4 flex items-center justify-between">
-        <span className={`font-mono text-[10px] tracking-[0.06em] ${ci.stuck ? "text-flare" : "text-muted-sage"}`}>
+        <span className={`font-mono text-[10px] tracking-[0.06em] ${ci.stuck ? "text-alert" : "text-muted-sage"}`}>
           {ci.text}
         </span>
         {paused ? (
@@ -165,7 +165,7 @@ export default function GoalCard({
           // CalibrationProtocol entry point
           <button
             onClick={() => onRunAudit(goal)}
-            className="rounded-[9px] border-none bg-flare px-[14px] py-[7px] font-display text-[12px] font-bold text-paper"
+            className="rounded-[9px] border-none bg-alert px-[14px] py-[7px] font-display text-[12px] font-bold text-paper"
           >
             {k.runAudit}
           </button>

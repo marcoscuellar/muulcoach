@@ -2,10 +2,10 @@ import Link from "next/link";
 import { CAL_WEEK, type CalCell } from "@/lib/data";
 
 const POST_STYLES: Record<string, { box: string; title: string; meta: string }> = {
-  posted: { box: "bg-tint-mint", title: "text-olive-deep", meta: "text-olive" },
+  posted: { box: "bg-verified-tint", title: "text-verified-deep", meta: "text-verified-deep" },
   draft: { box: "border border-dashed border-muted-soft bg-surface", title: "text-slate", meta: "text-muted-fog" },
   scheduled: { box: "bg-ink", title: "text-onink", meta: "text-volt" },
-  needs: { box: "bg-tint-coral", title: "text-coral-text", meta: "text-coral-text" },
+  needs: { box: "bg-alert-tint", title: "text-alert", meta: "text-alert" },
 };
 
 function Cell({ cell }: { cell: CalCell }) {
