@@ -90,14 +90,33 @@ export function MuulMarkVolt({ size = 26 }: { size?: number; radius?: number }) 
   return <CoachBobMark size={size} square={BRAND_ACCENT} glyph={BRAND_INK} />;
 }
 
+// Literal lowercase "b" lockup — matches the login email.
 function CoachBobMark({ size, square, glyph }: { size: number; square: string; glyph: string }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 512 512" aria-hidden>
-      <rect width="512" height="512" rx="114.5" fill={square} />
-      <g transform="translate(76.8 92.2) scale(3.3792)">
-        <path d="M66 44 A11 11 0 1 1 66 66" fill="none" stroke={glyph} strokeWidth="6.4" />
-        <rect x="26" y="37" width="40" height="35" rx="8" fill={glyph} />
-      </g>
-    </svg>
+    <div
+      aria-hidden
+      style={{
+        width: size,
+        height: size,
+        background: square,
+        borderRadius: size * 0.224,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <span
+        style={{
+          color: glyph,
+          fontFamily: "var(--font-display)",
+          fontWeight: 900,
+          fontSize: size * 0.66,
+          lineHeight: 1,
+          marginTop: -size * 0.03,
+        }}
+      >
+        b
+      </span>
+    </div>
   );
 }
