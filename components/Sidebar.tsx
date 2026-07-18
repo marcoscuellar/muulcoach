@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -14,7 +15,8 @@ import {
   WingmanIcon,
 } from "@/components/icons";
 import { STREAK_DAYS } from "@/lib/data";
-import { DEFAULT_AUTHOR_NAME, DEFAULT_AUTHOR_TITLE } from "@/lib/prompts";
+import { loadProfile } from "@/lib/profile";
+import SignOutButton from "@/components/SignOutButton";
 
 // Coach Bob is the main feature — the coaching core leads, the LinkedIn
 // content tools sit underneath as a supporting toolbox.
@@ -42,9 +44,18 @@ function initials(name: string) {
   );
 }
 
-export default function Sidebar() {
+export default function Sidebar({ userEmail }: { userEmail?: string }) {
   const pathname = usePathname();
   const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
+
+  const [profileName, setProfileName] = useState<string>("");
+  useEffect(() => {
+    const p = loadProfile();
+    if (p?.name && p.name !== "friend") setProfileName(p.name);
+  }, []);
+
+  const displayName = profileName || (userEmail ? userEmail.split("@")[0] : "You");
+  const subline = userEmail || "Not signed in";
 
   return (
     <aside className="flex flex-col gap-[26px] border-r border-muted-line bg-paper px-4 py-[22px]">
@@ -102,13 +113,14 @@ export default function Sidebar() {
           </div>
         </div>
         <div className="flex items-center gap-[10px] px-[6px] py-1">
-          <div className="flex h-[34px] w-[34px] items-center justify-center rounded-full bg-tint-mint font-display text-[13px] font-bold text-olive-deep">
-            {initials(DEFAULT_AUTHOR_NAME)}
+          <div className="flex h-[34px] w-[34px] flex-none items-center justify-center rounded-full bg-tint-mint font-display text-[13px] font-bold text-olive-deep">
+            {initials(displayName)}
           </div>
-          <div className="overflow-hidden">
-            <div className="truncate font-display text-[13px] font-semibold">{DEFAULT_AUTHOR_NAME}</div>
-            <div className="truncate text-[11px] text-muted-fog">{DEFAULT_AUTHOR_TITLE}</div>
+          <div className="min-w-0 flex-1 overflow-hidden">
+            <div className="truncate font-display text-[13px] font-semibold capitalize">{displayName}</div>
+            <div className="truncate text-[11px] text-muted-fog">{subline}</div>
           </div>
+          {userEmail && <SignOutButton />}
         </div>
       </div>
     </aside>
