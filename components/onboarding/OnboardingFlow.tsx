@@ -93,9 +93,11 @@ export default function OnboardingFlow() {
             <div>
               <div className="mb-2 font-mono text-[11px] tracking-[0.1em] text-olive">HOW SHOULD I COACH YOU?</div>
               <h2 className="mb-1 font-display text-[24px] font-bold tracking-[-0.02em]">
-                When you&apos;re slipping, I should be…
+                What motivates you best?
               </h2>
-              <p className="mb-5 text-[14px] text-muted-fog">Same plan underneath — I just change how I deliver it.</p>
+              <p className="mb-5 text-[14px] text-muted-fog">
+                I&apos;ll use this style when you&apos;re building momentum, feeling stuck, or getting back on track.
+              </p>
               <div className="flex flex-col gap-[10px]">
                 {STYLES.map((s) => (
                   <button

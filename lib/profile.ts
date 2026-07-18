@@ -21,10 +21,10 @@ export type Profile = {
 export const COACH_NAME = "Coach Bob";
 
 export const STYLES: { id: CoachStyle; label: string; blurb: string }[] = [
-  { id: "tough", label: "Tough love", blurb: "Call me out. No excuses. Push me hard." },
-  { id: "direct", label: "Direct but encouraging", blurb: "Straight talk, then a push and some belief." },
-  { id: "gentle", label: "Gentle accountability", blurb: "Warm, low-pressure, meet me where I am." },
-  { id: "structured", label: "Highly structured", blurb: "Give me steps, times, and a clear plan." },
+  { id: "tough", label: "Tough love", blurb: "Call me out. No excuses. Get me moving." },
+  { id: "direct", label: "Direct but encouraging", blurb: "Be honest, give me a push, and remind me I can do this." },
+  { id: "gentle", label: "Gentle accountability", blurb: "Keep it low-pressure, supportive, and help me take the next step." },
+  { id: "structured", label: "Highly structured", blurb: "Give me clear steps, timing, and a specific plan." },
 ];
 
 export const CADENCES: { id: Cadence; label: string; blurb: string }[] = [
