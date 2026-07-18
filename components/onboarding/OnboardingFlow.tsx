@@ -82,7 +82,7 @@ export default function OnboardingFlow() {
               </p>
               <button
                 onClick={() => setStep("style")}
-                className="mt-6 rounded-[11px] border-none bg-volt px-6 py-[13px] font-display text-[15px] font-bold text-ink"
+                className="mt-6 rounded-[11px] border-none bg-volt px-6 py-[13px] font-display text-[15px] font-bold text-white"
               >
                 Let&apos;s go →
               </button>
@@ -121,7 +121,7 @@ export default function OnboardingFlow() {
                 <button
                   onClick={() => setStep("cadence")}
                   disabled={!style}
-                  className="rounded-[11px] border-none bg-volt px-6 py-[12px] font-display text-[14px] font-bold text-ink disabled:opacity-40"
+                  className="rounded-[11px] border-none bg-volt px-6 py-[12px] font-display text-[14px] font-bold text-white disabled:opacity-40"
                 >
                   Next →
                 </button>
@@ -156,7 +156,7 @@ export default function OnboardingFlow() {
                 <button
                   onClick={() => setStep("name")}
                   disabled={!cadence}
-                  className="rounded-[11px] border-none bg-volt px-6 py-[12px] font-display text-[14px] font-bold text-ink disabled:opacity-40"
+                  className="rounded-[11px] border-none bg-volt px-6 py-[12px] font-display text-[14px] font-bold text-white disabled:opacity-40"
                 >
                   Next →
                 </button>
@@ -182,7 +182,7 @@ export default function OnboardingFlow() {
                 </button>
                 <button
                   onClick={finish}
-                  className="rounded-[11px] border-none bg-volt px-6 py-[13px] font-display text-[15px] font-bold text-ink"
+                  className="rounded-[11px] border-none bg-volt px-6 py-[13px] font-display text-[15px] font-bold text-white"
                 >
                   Meet {COACH_NAME} →
                 </button>

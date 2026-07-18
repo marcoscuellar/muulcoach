@@ -16,7 +16,7 @@ function momoClass(kind: "hot" | "up") {
   return kind === "hot" ? "bg-tint-coral text-coral-text" : "bg-tint-mint text-olive-deep";
 }
 function catClass(kind: NewsItem["kind"]) {
-  if (kind === "ai") return "bg-volt text-ink";
+  if (kind === "ai") return "bg-volt text-white";
   if (kind === "security") return "bg-tint-coral text-coral-text";
   return "bg-[#2A3A5C] text-[#C4CEDE]";
 }
@@ -24,7 +24,7 @@ function catClass(kind: NewsItem["kind"]) {
 const DraftBtn = ({ href }: { href: string }) => (
   <Link
     href={href}
-    className="whitespace-nowrap rounded-[9px] border-none bg-volt px-[15px] py-[9px] font-display text-[12px] font-bold text-ink"
+    className="whitespace-nowrap rounded-[9px] border-none bg-volt px-[15px] py-[9px] font-display text-[12px] font-bold text-white"
   >
     Draft a take →
   </Link>

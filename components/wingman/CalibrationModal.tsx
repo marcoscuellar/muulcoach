@@ -136,7 +136,7 @@ export default function CalibrationModal({
                   if (title.trim()) onEditTitle(goal.id, title.trim());
                   onClose();
                 }}
-                className="mt-4 rounded-[10px] border-none bg-volt px-4 py-[11px] font-display text-[14px] font-bold text-ink"
+                className="mt-4 rounded-[10px] border-none bg-volt px-4 py-[11px] font-display text-[14px] font-bold text-white"
               >
                 Save & keep going →
               </button>
@@ -191,7 +191,7 @@ export default function CalibrationModal({
               <button
                 onClick={commitBreakdown}
                 disabled={!cleanSteps.length}
-                className="mt-4 block w-full rounded-[10px] border-none bg-volt px-4 py-[11px] font-display text-[14px] font-bold text-ink disabled:opacity-40"
+                className="mt-4 block w-full rounded-[10px] border-none bg-volt px-4 py-[11px] font-display text-[14px] font-bold text-white disabled:opacity-40"
               >
                 {cleanSteps.length ? k.adhd.brokenDown(cleanSteps[0]) : "Add at least one step"}
               </button>

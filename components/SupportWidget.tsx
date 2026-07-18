@@ -174,9 +174,9 @@ export default function SupportWidget() {
         onClick={() => setOpen((o) => !o)}
         className="inline-flex select-none items-center gap-[6px] rounded-full border px-[14px] py-[7px] font-mono text-[11px] font-bold uppercase tracking-[0.06em] transition-all"
         style={{
-          background: open ? "#FF6B5C" : "transparent",
-          color: "#1B2A4A",
-          borderColor: open ? "#FF6B5C" : "rgba(0,0,0,0.2)",
+          background: open ? "#8C2F3D" : "transparent",
+          color: open ? "#ffffff" : "#1B2A4A",
+          borderColor: open ? "#8C2F3D" : "rgba(0,0,0,0.2)",
         }}
       >
         <span>{open ? "●" : "○"}</span> We Got You
@@ -248,7 +248,7 @@ export default function SupportWidget() {
                       style={{
                         width: 92,
                         height: 92,
-                        background: `conic-gradient(#FF6B5C ${progress}deg, rgba(255,255,255,.16) 0deg)`,
+                        background: `conic-gradient(#8C2F3D ${progress}deg, rgba(255,255,255,.16) 0deg)`,
                       }}
                     >
                       <div className="flex h-[72px] w-[72px] items-center justify-center rounded-full bg-[#0a0a0a] text-[18px] font-semibold tabular-nums text-white">
@@ -258,7 +258,7 @@ export default function SupportWidget() {
                     <div className="flex flex-1 flex-col gap-2">
                       <button
                         onClick={timerToggle}
-                        className="rounded-lg border-none bg-volt px-5 py-[14px] text-[16px] font-semibold text-ink"
+                        className="rounded-lg border-none bg-volt px-5 py-[14px] text-[16px] font-semibold text-white"
                         style={{ fontFamily: "var(--font-instrument-sans)" }}
                       >
                         {timerBtnLabel} {durationLabel}

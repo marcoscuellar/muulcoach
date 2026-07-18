@@ -14,8 +14,8 @@ export default function AnalyticsPage() {
           <svg viewBox="0 0 520 200" width="100%" className="block overflow-visible">
             <defs>
               <linearGradient id="appArea" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stopColor="#FF6B5C" stopOpacity="0.35" />
-                <stop offset="1" stopColor="#FF6B5C" stopOpacity="0" />
+                <stop offset="0" stopColor="#8C2F3D" stopOpacity="0.35" />
+                <stop offset="1" stopColor="#8C2F3D" stopOpacity="0" />
               </linearGradient>
             </defs>
             <line x1="0" y1="50" x2="520" y2="50" stroke="#E3E7EE" strokeWidth="1" />
@@ -33,7 +33,7 @@ export default function AnalyticsPage() {
               strokeLinecap="round"
               strokeLinejoin="round"
             />
-            <circle cx="520" cy="26" r="4.5" fill="#FF6B5C" stroke="#1B2A4A" strokeWidth="2" />
+            <circle cx="520" cy="26" r="4.5" fill="#8C2F3D" stroke="#1B2A4A" strokeWidth="2" />
           </svg>
         </div>
         <div className="rounded-card bg-ink p-6">
@@ -41,7 +41,7 @@ export default function AnalyticsPage() {
           <div className="mb-[18px] font-mono text-[11px] text-onink-faint">LAST 10 WEEKS · MON–FRI</div>
           <div className="grid grid-cols-10 gap-[5px]">
             {ANALYTICS_HEAT.map((op, i) => (
-              <span key={i} className="rounded-[3px]" style={{ aspectRatio: "1", background: `rgba(255,107,92,${op})` }} />
+              <span key={i} className="rounded-[3px]" style={{ aspectRatio: "1", background: `rgba(140,47,61,${op})` }} />
             ))}
           </div>
         </div>
@@ -57,7 +57,7 @@ export default function AnalyticsPage() {
               <div key={i} className="flex h-full flex-1 flex-col items-center justify-end gap-2">
                 <div
                   className="w-full rounded-t-[6px]"
-                  style={{ height: `${pct}%`, background: pct >= 80 ? "#FF6B5C" : "#E3E7EE" }}
+                  style={{ height: `${pct}%`, background: pct >= 80 ? "#8C2F3D" : "#E3E7EE" }}
                 />
                 <span className="font-mono text-[10px] text-muted-fog">W{i + 1}</span>
               </div>

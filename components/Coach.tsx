@@ -142,8 +142,8 @@ export default function Coach() {
                 </div>
               )}
               <div
-                className={`max-w-[80%] rounded-[14px] px-[15px] py-3 text-[15px] leading-[1.5] text-ink ${
-                  isCoach ? "rounded-tl-[4px] border border-muted-line bg-surface" : "rounded-tr-[4px] bg-volt"
+                className={`max-w-[80%] rounded-[14px] px-[15px] py-3 text-[15px] leading-[1.5] ${
+                  isCoach ? "rounded-tl-[4px] border border-muted-line bg-surface text-ink" : "rounded-tr-[4px] bg-volt text-white"
                 }`}
               >
                 {m.text}
@@ -206,7 +206,7 @@ export default function Coach() {
         />
         <button
           onClick={() => send()}
-          className="rounded-xl border-none bg-volt px-5 py-[14px] font-display text-[14px] font-bold text-ink"
+          className="rounded-xl border-none bg-volt px-5 py-[14px] font-display text-[14px] font-bold text-white"
         >
           Send
         </button>

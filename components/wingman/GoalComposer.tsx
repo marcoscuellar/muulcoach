@@ -88,7 +88,7 @@ export default function GoalComposer({
           <button
             onClick={() => submit(false)}
             disabled={!canSave || !hasMicro}
-            className="rounded-[10px] border-none bg-volt px-4 py-[11px] font-display text-[14px] font-bold text-ink disabled:cursor-not-allowed disabled:opacity-40"
+            className="rounded-[10px] border-none bg-volt px-4 py-[11px] font-display text-[14px] font-bold text-white disabled:cursor-not-allowed disabled:opacity-40"
           >
             {c.ctaActive}
           </button>

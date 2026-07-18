@@ -357,7 +357,7 @@ function DraftRow({
               setOpen(false);
             }}
             disabled={!micro.trim()}
-            className="mt-2 rounded-[10px] border-none bg-volt px-4 py-[9px] font-display text-[13px] font-bold text-ink disabled:opacity-40"
+            className="mt-2 rounded-[10px] border-none bg-volt px-4 py-[9px] font-display text-[13px] font-bold text-white disabled:opacity-40"
           >
             {c.ctaActive}
           </button>

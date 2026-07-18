@@ -2,7 +2,8 @@
 // email-client compatibility (Gmail/Outlook strip <style> and SVG).
 
 const NAVY = "#1B2A4A";
-const CORAL = "#FF6B5C";
+const BURGUNDY = "#8C2F3D";
+const CREAM = "#F4E7EA";
 const GRAY_BG = "#F3F5F8";
 const MUTED = "#6B7688";
 
@@ -22,7 +23,7 @@ export function loginEmailHtml(url: string): string {
               <td style="padding:28px 32px 8px 32px;">
                 <table role="presentation" cellpadding="0" cellspacing="0">
                   <tr>
-                    <td style="width:40px;height:40px;background:${NAVY};border-radius:10px;text-align:center;vertical-align:middle;font-weight:800;font-size:22px;color:${CORAL};line-height:40px;">b</td>
+                    <td style="width:40px;height:40px;background:${BURGUNDY};border-radius:10px;text-align:center;vertical-align:middle;font-weight:800;font-size:22px;color:${CREAM};line-height:40px;">b</td>
                     <td style="padding-left:10px;font-weight:800;font-size:18px;color:${NAVY};">Coach&nbsp;Bob</td>
                   </tr>
                 </table>
@@ -30,7 +31,7 @@ export function loginEmailHtml(url: string): string {
             </tr>
             <tr>
               <td style="padding:16px 32px 0 32px;">
-                <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:2px;color:${CORAL};font-weight:700;">SIGN IN</div>
+                <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:2px;color:${BURGUNDY};font-weight:700;">SIGN IN</div>
                 <div style="font-size:26px;font-weight:800;color:${NAVY};margin-top:6px;">Let&rsquo;s get to work.</div>
                 <p style="font-size:15px;line-height:1.5;color:#2A3244;margin:14px 0 0 0;">
                   Tap below to log in to Coach Bob. This link signs you in on this device and expires shortly.
@@ -42,7 +43,7 @@ export function loginEmailHtml(url: string): string {
               <td style="padding:24px 32px 8px 32px;">
                 <table role="presentation" cellpadding="0" cellspacing="0">
                   <tr>
-                    <td style="background:${CORAL};border-radius:11px;">
+                    <td style="background:${BURGUNDY};border-radius:11px;">
                       <a href="${url}" style="display:inline-block;padding:14px 28px;font-size:15px;font-weight:800;color:#ffffff;text-decoration:none;font-family:Arial,Helvetica,sans-serif;">Sign in &rarr;</a>
                     </td>
                   </tr>

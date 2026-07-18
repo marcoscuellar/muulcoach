@@ -32,7 +32,7 @@ export default function TopBar() {
         {showNewBtn && (
           <Link
             href="/composer"
-            className="inline-flex items-center gap-2 rounded-[11px] border-none bg-volt px-[18px] py-[11px] font-display text-sm font-bold text-ink"
+            className="inline-flex items-center gap-2 rounded-[11px] border-none bg-volt px-[18px] py-[11px] font-display text-sm font-bold text-white"
           >
             <PlusIcon size={16} />
             New post

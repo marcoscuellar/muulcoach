@@ -72,7 +72,7 @@ export default function LoginForm() {
               <button
                 type="submit"
                 disabled={state === "sending"}
-                className="mt-5 w-full rounded-[11px] border-none bg-volt px-6 py-[13px] font-display text-[15px] font-bold text-ink disabled:opacity-50"
+                className="mt-5 w-full rounded-[11px] border-none bg-volt px-6 py-[13px] font-display text-[15px] font-bold text-white disabled:opacity-50"
               >
                 {state === "sending" ? "Sending…" : "Send my login link →"}
               </button>

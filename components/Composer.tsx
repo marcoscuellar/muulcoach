@@ -155,8 +155,8 @@ export default function Composer() {
         <button
           onClick={generate}
           disabled={loading}
-          className="mt-auto rounded-xl border-none px-[15px] py-[15px] font-display text-[16px] font-bold text-ink"
-          style={{ background: loading ? "#FFE0DB" : "#FF6B5C", cursor: loading ? "default" : "pointer" }}
+          className="mt-auto rounded-xl border-none px-[15px] py-[15px] font-display text-[16px] font-bold"
+          style={{ background: loading ? "#F4E7EA" : "#8C2F3D", color: loading ? "#8C2F3D" : "#ffffff", cursor: loading ? "default" : "pointer" }}
         >
           {loading ? "Coach Bob is drafting…" : draft ? "Draft a fresh version" : "Draft my post"}
         </button>

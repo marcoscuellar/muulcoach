@@ -15,11 +15,11 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        volt: "#FF6B5C", // coral — the one accent (action / highlights)
+        volt: "#8C2F3D", // burgundy — the one accent (action / highlights)
         ink: "#1B2A4A", // navy — primary text + dark surfaces
         paper: "#FFFFFF", // white base background
         surface: "#F3F5F8", // cool gray-white raised surface
-        flare: "#FF6B5C", // coral pop
+        flare: "#8C2F3D", // burgundy pop
         slate: "#445064",
         olive: {
           DEFAULT: "#64748B", // slate-blue — labels / links
@@ -36,16 +36,16 @@ const config: Config = {
           DEFAULT: "#EEF1F6",
           soft: "#C4CEDE",
           faint: "#93A0BC",
-          aqua: "#FFCFC8",
+          aqua: "#E7B9C0", // soft rose — accent text/tint legible on navy
         },
         tint: {
           mint: "#E7ECF3", // neutral positive tint
           line: "#E3E7EE",
           sage: "#C7CFDB",
-          coral: "#FFE0DB", // draft / needs-attention (soft coral)
+          coral: "#F4E7EA", // draft / needs-attention (soft burgundy tint)
         },
         coral: {
-          text: "#C63D28",
+          text: "#8C2F3D", // burgundy, readable as text/links on light
         },
         // Status-only semantics (never decorative): green = on-track/done,
         // red = missed/needs-action. Per the Coach Bob color system.

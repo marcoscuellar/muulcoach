@@ -122,7 +122,7 @@ export default function AdhdTax({ onSetAlarm }: { onSetAlarm: (a: DepartureAlarm
               <div className="mt-4 text-[14px] font-semibold">{t.ask}</div>
               <button
                 onClick={setAlarm}
-                className="mt-3 rounded-[10px] border-none bg-volt px-4 py-[11px] font-display text-[14px] font-bold text-ink"
+                className="mt-3 rounded-[10px] border-none bg-volt px-4 py-[11px] font-display text-[14px] font-bold text-white"
               >
                 {t.setAlarm}
               </button>
