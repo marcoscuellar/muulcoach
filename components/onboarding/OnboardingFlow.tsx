@@ -78,7 +78,7 @@ export default function OnboardingFlow() {
               </ul>
               <p className="mt-3 text-[15px] font-semibold text-ink">Not a nag, not a therapist.</p>
               <p className="mt-3 text-[15px] leading-[1.5] text-muted-fog">
-                First, two quick questions so I know how to talk to you. Takes 20 seconds.
+                First, two quick questions so I know how to coach you. Takes 20 seconds.
               </p>
               <button
                 onClick={() => setStep("style")}
