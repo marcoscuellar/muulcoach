@@ -7,7 +7,7 @@ import { createPortal } from "react-dom";
 // standalone widget and wired into the app top bar. Persists {mode, techIndex,
 // offload} to localStorage['dos-support-widget-v1'].
 
-const BRAND = "#22282B";
+const BRAND = "#1B2A4A";
 const STORAGE_KEY = "dos-support-widget-v1";
 
 type Resource = { name: string; url: string; note: string };
@@ -174,9 +174,9 @@ export default function SupportWidget() {
         onClick={() => setOpen((o) => !o)}
         className="inline-flex select-none items-center gap-[6px] rounded-full border px-[14px] py-[7px] font-mono text-[11px] font-bold uppercase tracking-[0.06em] transition-all"
         style={{
-          background: open ? "#C4F542" : "transparent",
-          color: "#22282B",
-          borderColor: open ? "#C4F542" : "rgba(0,0,0,0.2)",
+          background: open ? "#FF6B5C" : "transparent",
+          color: "#1B2A4A",
+          borderColor: open ? "#FF6B5C" : "rgba(0,0,0,0.2)",
         }}
       >
         <span>{open ? "●" : "○"}</span> We Got You
@@ -248,7 +248,7 @@ export default function SupportWidget() {
                       style={{
                         width: 92,
                         height: 92,
-                        background: `conic-gradient(#C4F542 ${progress}deg, rgba(255,255,255,.16) 0deg)`,
+                        background: `conic-gradient(#FF6B5C ${progress}deg, rgba(255,255,255,.16) 0deg)`,
                       }}
                     >
                       <div className="flex h-[72px] w-[72px] items-center justify-center rounded-full bg-[#0a0a0a] text-[18px] font-semibold tabular-nums text-white">

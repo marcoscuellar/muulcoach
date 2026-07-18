@@ -156,7 +156,7 @@ export default function Composer() {
           onClick={generate}
           disabled={loading}
           className="mt-auto rounded-xl border-none px-[15px] py-[15px] font-display text-[16px] font-bold text-ink"
-          style={{ background: loading ? "#d3f4ec" : "#C4F542", cursor: loading ? "default" : "pointer" }}
+          style={{ background: loading ? "#FFE0DB" : "#FF6B5C", cursor: loading ? "default" : "pointer" }}
         >
           {loading ? "Coach Bob is drafting…" : draft ? "Draft a fresh version" : "Draft my post"}
         </button>
@@ -205,7 +205,7 @@ export default function Composer() {
                 </div>
               )}
             </div>
-            <div className="flex items-center gap-[18px] border-t border-[#eef3f2] px-5 py-3 text-[13px] text-muted-sage">
+            <div className="flex items-center gap-[18px] border-t border-[#EEF1F6] px-5 py-3 text-[13px] text-muted-sage">
               <span>Like</span>
               <span>Comment</span>
               <span>Repost</span>
@@ -249,7 +249,7 @@ export default function Composer() {
             </div>
           )}
           {error && (
-            <div className="mt-[18px] rounded-xl border border-[#ffd9cb] bg-[#ffece4] p-[14px] text-[14px] text-coral-text">
+            <div className="mt-[18px] rounded-xl border border-[#FFCFC8] bg-[#FFE0DB] p-[14px] text-[14px] text-coral-text">
               {error}
             </div>
           )}

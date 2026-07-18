@@ -18,7 +18,7 @@ function momoClass(kind: "hot" | "up") {
 function catClass(kind: NewsItem["kind"]) {
   if (kind === "ai") return "bg-volt text-ink";
   if (kind === "security") return "bg-tint-coral text-coral-text";
-  return "bg-[#2c3a3f] text-[#9fe0d4]";
+  return "bg-[#2A3A5C] text-[#C4CEDE]";
 }
 
 const DraftBtn = ({ href }: { href: string }) => (
@@ -75,12 +75,12 @@ export default function TrendingPage() {
           <div className="font-mono text-[11px] tracking-[0.08em] text-volt">THE DAILY BRIEF</div>
           <span className="font-mono text-[10px] text-onink-faint">WED · JULY 16</span>
         </div>
-        <div className="mb-[18px] font-display text-[20px] font-bold tracking-[-0.02em] text-[#F6F4EE]">
+        <div className="mb-[18px] font-display text-[20px] font-bold tracking-[-0.02em] text-[#EEF1F6]">
           Today&apos;s news, ready to post about
         </div>
         <div className="flex flex-col gap-[10px]">
           {NEWS.map((n, i) => (
-            <div key={i} className="flex items-center gap-[14px] rounded-[13px] border border-[#2c3a3f] bg-[#1b2529] px-4 py-[13px]">
+            <div key={i} className="flex items-center gap-[14px] rounded-[13px] border border-[#2A3A5C] bg-[#16233F] px-4 py-[13px]">
               <span
                 className={`min-w-[66px] flex-shrink-0 rounded-[7px] px-[9px] py-1 text-center font-mono text-[9px] font-bold tracking-[0.05em] ${catClass(n.kind)}`}
               >

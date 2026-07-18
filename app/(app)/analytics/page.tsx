@@ -14,13 +14,13 @@ export default function AnalyticsPage() {
           <svg viewBox="0 0 520 200" width="100%" className="block overflow-visible">
             <defs>
               <linearGradient id="appArea" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stopColor="#C4F542" stopOpacity="0.35" />
-                <stop offset="1" stopColor="#C4F542" stopOpacity="0" />
+                <stop offset="0" stopColor="#FF6B5C" stopOpacity="0.35" />
+                <stop offset="1" stopColor="#FF6B5C" stopOpacity="0" />
               </linearGradient>
             </defs>
-            <line x1="0" y1="50" x2="520" y2="50" stroke="#dcdedb" strokeWidth="1" />
-            <line x1="0" y1="100" x2="520" y2="100" stroke="#dcdedb" strokeWidth="1" />
-            <line x1="0" y1="150" x2="520" y2="150" stroke="#dcdedb" strokeWidth="1" />
+            <line x1="0" y1="50" x2="520" y2="50" stroke="#E3E7EE" strokeWidth="1" />
+            <line x1="0" y1="100" x2="520" y2="100" stroke="#E3E7EE" strokeWidth="1" />
+            <line x1="0" y1="150" x2="520" y2="150" stroke="#E3E7EE" strokeWidth="1" />
             <path
               d="M0 165 L65 150 L130 158 L195 120 L260 128 L325 88 L390 70 L455 48 L520 26 L520 200 L0 200 Z"
               fill="url(#appArea)"
@@ -28,12 +28,12 @@ export default function AnalyticsPage() {
             <polyline
               points="0 165 65 150 130 158 195 120 260 128 325 88 390 70 455 48 520 26"
               fill="none"
-              stroke="#22282B"
+              stroke="#1B2A4A"
               strokeWidth="2.2"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
-            <circle cx="520" cy="26" r="4.5" fill="#C4F542" stroke="#22282B" strokeWidth="2" />
+            <circle cx="520" cy="26" r="4.5" fill="#FF6B5C" stroke="#1B2A4A" strokeWidth="2" />
           </svg>
         </div>
         <div className="rounded-card bg-ink p-6">
@@ -41,7 +41,7 @@ export default function AnalyticsPage() {
           <div className="mb-[18px] font-mono text-[11px] text-onink-faint">LAST 10 WEEKS · MON–FRI</div>
           <div className="grid grid-cols-10 gap-[5px]">
             {ANALYTICS_HEAT.map((op, i) => (
-              <span key={i} className="rounded-[3px]" style={{ aspectRatio: "1", background: `rgba(196,245,66,${op})` }} />
+              <span key={i} className="rounded-[3px]" style={{ aspectRatio: "1", background: `rgba(255,107,92,${op})` }} />
             ))}
           </div>
         </div>
@@ -57,7 +57,7 @@ export default function AnalyticsPage() {
               <div key={i} className="flex h-full flex-1 flex-col items-center justify-end gap-2">
                 <div
                   className="w-full rounded-t-[6px]"
-                  style={{ height: `${pct}%`, background: pct >= 80 ? "#C4F542" : "#dcdedb" }}
+                  style={{ height: `${pct}%`, background: pct >= 80 ? "#FF6B5C" : "#E3E7EE" }}
                 />
                 <span className="font-mono text-[10px] text-muted-fog">W{i + 1}</span>
               </div>
@@ -71,10 +71,10 @@ export default function AnalyticsPage() {
             {REACH_BY_TYPE.map((r) => (
               <div key={r.label}>
                 <div className="mb-[6px] flex justify-between">
-                  <span className="text-[13px] font-semibold text-[#2f3a37]">{r.label}</span>
+                  <span className="text-[13px] font-semibold text-[#1B2A4A]">{r.label}</span>
                   <span className="font-mono text-[11px] text-muted-fog">{r.value}</span>
                 </div>
-                <div className="h-[10px] overflow-hidden rounded-[6px] bg-[#eef3f2]">
+                <div className="h-[10px] overflow-hidden rounded-[6px] bg-[#EEF1F6]">
                   <div className="h-full rounded-[6px] bg-ink" style={{ width: `${r.pct}%` }} />
                 </div>
               </div>

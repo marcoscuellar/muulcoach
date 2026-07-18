@@ -77,8 +77,8 @@ export const WingmanIcon = (p: IconProps) => (
 );
 
 // Official Coach Bob mark. Brand colors centralized here — change once to recolor.
-const BRAND_INK = "#22282B";
-const BRAND_ACCENT = "#C4F542";
+const BRAND_INK = "#1B2A4A";
+const BRAND_ACCENT = "#FF6B5C";
 
 /** The official Coach Bob "b" mark — accent glyph on an ink tile. */
 export function MuulMark({ size = 32 }: { size?: number; radius?: number }) {

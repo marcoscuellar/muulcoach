@@ -15,37 +15,37 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        volt: "#C4F542", // accent / action only
-        ink: "#22282B", // primary text + dark surfaces
-        paper: "#FFFFFF", // base background
-        surface: "#F2F3F1", // subtle raised surface
-        flare: "#FF6A3D", // rare AI / urgency pop
-        slate: "#454b41",
+        volt: "#FF6B5C", // coral — the one accent (action / highlights)
+        ink: "#1B2A4A", // navy — primary text + dark surfaces
+        paper: "#FFFFFF", // white base background
+        surface: "#F3F5F8", // cool gray-white raised surface
+        flare: "#FF6B5C", // coral pop
+        slate: "#445064",
         olive: {
-          DEFAULT: "#5c6b1f",
-          deep: "#4a5720",
+          DEFAULT: "#64748B", // slate-blue — labels / links
+          deep: "#475569",
         },
         muted: {
-          line: "#dcdedb",
-          soft: "#c1c9b5",
-          sage: "#a3ad8f",
-          fog: "#7c847c",
-          deep: "#2c322c",
+          line: "#E3E7EE",
+          soft: "#C7CFDB",
+          sage: "#9AA5B5",
+          fog: "#6B7688",
+          deep: "#2A3244",
         },
         onink: {
-          DEFAULT: "#EEF0EA",
-          soft: "#c1c9b5",
-          faint: "#a3ad8f",
-          aqua: "#cdeee7",
+          DEFAULT: "#EEF1F6",
+          soft: "#C4CEDE",
+          faint: "#93A0BC",
+          aqua: "#FFCFC8",
         },
         tint: {
-          mint: "#d3f4ec", // positive / posted
-          line: "#dcdedb",
-          sage: "#c1c9b5",
-          coral: "#ffd9cb", // draft / needs-attention
+          mint: "#E7ECF3", // neutral positive tint
+          line: "#E3E7EE",
+          sage: "#C7CFDB",
+          coral: "#FFE0DB", // draft / needs-attention (soft coral)
         },
         coral: {
-          text: "#a13a1a",
+          text: "#C63D28",
         },
         // Status-only semantics (never decorative): green = on-track/done,
         // red = missed/needs-action. Per the Coach Bob color system.

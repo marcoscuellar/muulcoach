@@ -89,7 +89,7 @@ export default function HomePage() {
                 <span
                   key={i}
                   className="rounded-[4px]"
-                  style={{ aspectRatio: "1", background: `rgba(196,245,66,${op})` }}
+                  style={{ aspectRatio: "1", background: `rgba(255,107,92,${op})` }}
                 />
               ))}
             </div>

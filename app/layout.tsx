@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Instrument_Sans, Space_Mono, Archivo } from "next/font/google";
+import { Instrument_Sans, Space_Mono, Archivo_Black } from "next/font/google";
 import "./globals.css";
 
-// Archivo is the app-wide display face — strong, commanding, all weights.
-const archivo = Archivo({
+// Archivo Black is the app-wide display face — one heavy, commanding weight.
+const archivo = Archivo_Black({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
+  weight: ["400"],
   variable: "--font-display",
   display: "swap",
 });
