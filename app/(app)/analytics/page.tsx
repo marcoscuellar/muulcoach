@@ -28,8 +28,8 @@ export default function AnalyticsPage() {
           <svg viewBox="0 0 520 200" width="100%" className="block overflow-visible">
             <defs>
               <linearGradient id="appArea" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stopColor="#8C2F3D" stopOpacity="0.35" />
-                <stop offset="1" stopColor="#8C2F3D" stopOpacity="0" />
+                <stop offset="0" stopColor="#1B1B1D" stopOpacity="0.35" />
+                <stop offset="1" stopColor="#1B1B1D" stopOpacity="0" />
               </linearGradient>
             </defs>
             <line x1="0" y1="50" x2="520" y2="50" stroke="#E3E7EE" strokeWidth="1" />
@@ -42,12 +42,12 @@ export default function AnalyticsPage() {
             <polyline
               points="0 165 65 150 130 158 195 120 260 128 325 88 390 70 455 48 520 26"
               fill="none"
-              stroke="#1B2A4A"
+              stroke="#1B1B1D"
               strokeWidth="2.2"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
-            <circle cx="520" cy="26" r="4.5" fill="#8C2F3D" stroke="#1B2A4A" strokeWidth="2" />
+            <circle cx="520" cy="26" r="4.5" fill="#1B1B1D" stroke="#1B1B1D" strokeWidth="2" />
           </svg>
         </div>
         <div className="rounded-card bg-ink p-6">
@@ -55,7 +55,7 @@ export default function AnalyticsPage() {
           <div className="mb-[18px] font-mono text-[11px] text-onink-faint">LAST 10 WEEKS · MON–FRI</div>
           <div className="grid grid-cols-10 gap-[5px]">
             {ANALYTICS_HEAT.map((op, i) => (
-              <span key={i} className="rounded-[3px]" style={{ aspectRatio: "1", background: `rgba(244,231,234,${op})` }} />
+              <span key={i} className="rounded-[3px]" style={{ aspectRatio: "1", background: `rgba(236,230,218,${op})` }} />
             ))}
           </div>
         </div>
@@ -71,7 +71,7 @@ export default function AnalyticsPage() {
               <div key={i} className="flex h-full flex-1 flex-col items-center justify-end gap-2">
                 <div
                   className="w-full rounded-t-[6px]"
-                  style={{ height: `${pct}%`, background: pct >= 80 ? "#8C2F3D" : "#E3E7EE" }}
+                  style={{ height: `${pct}%`, background: pct >= 80 ? "#1B1B1D" : "#E3E7EE" }}
                 />
                 <span className="font-mono text-[10px] text-muted-fog">W{i + 1}</span>
               </div>
@@ -85,7 +85,7 @@ export default function AnalyticsPage() {
             {REACH_BY_TYPE.map((r) => (
               <div key={r.label}>
                 <div className="mb-[6px] flex justify-between">
-                  <span className="text-[13px] font-semibold text-[#1B2A4A]">{r.label}</span>
+                  <span className="text-[13px] font-semibold text-[#1B1B1D]">{r.label}</span>
                   <span className="font-mono text-[11px] text-muted-fog">{r.value}</span>
                 </div>
                 <div className="h-[10px] overflow-hidden rounded-[6px] bg-[#EEF1F6]">

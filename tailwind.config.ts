@@ -15,37 +15,40 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        volt: "#8C2F3D", // burgundy — the one accent (action / highlights)
-        ink: "#1B2A4A", // navy — primary text + dark surfaces
+        // Monochrome + bone. No color accent — contrast and weight do the work.
+        // Ink (near-black), paper (white), and bone (warm off-white) carry it all.
+        volt: "#1B1B1D", // action / emphasis = ink (no accent hue)
+        ink: "#1B1B1D", // near-black — primary text + dark surfaces
         paper: "#FFFFFF", // white base background
-        surface: "#F3F5F8", // cool gray-white raised surface
-        flare: "#8C2F3D", // burgundy pop
-        slate: "#445064",
+        surface: "#ECE6DA", // bone — warm off-white raised surface
+        flare: "#1B1B1D", // emphasis = ink
+        bone: "#ECE6DA", // warm off-white
+        slate: "#5A554C", // warm gray — muted body
         olive: {
-          DEFAULT: "#64748B", // slate-blue — labels / links
-          deep: "#475569",
+          DEFAULT: "#8A8378", // warm gray — labels / links
+          deep: "#6B6558",
         },
         muted: {
-          line: "#E3E7EE",
-          soft: "#C7CFDB",
-          sage: "#9AA5B5",
-          fog: "#6B7688",
-          deep: "#2A3244",
+          line: "#E4DFD4", // warm hairline border
+          soft: "#CFC8B9",
+          sage: "#A8A192",
+          fog: "#736C5F", // secondary text
+          deep: "#2A2822",
         },
         onink: {
-          DEFAULT: "#EEF1F6",
-          soft: "#C4CEDE",
-          faint: "#93A0BC",
-          aqua: "#E7B9C0", // soft rose — accent text/tint legible on navy
+          DEFAULT: "#F0ECE3", // bone-white text on ink
+          soft: "#CFC9BB",
+          faint: "#9A9384",
+          aqua: "#CFC9BB", // light bone tint legible on ink
         },
         tint: {
-          mint: "#E7ECF3", // neutral positive tint
-          line: "#E3E7EE",
-          sage: "#C7CFDB",
-          coral: "#F4E7EA", // draft / needs-attention (soft burgundy tint)
+          mint: "#EDE8DE", // neutral warm tint
+          line: "#E4DFD4",
+          sage: "#CFC8B9",
+          coral: "#ECE6DA", // draft / needs-attention → bone
         },
         coral: {
-          text: "#8C2F3D", // burgundy, readable as text/links on light
+          text: "#1B1B1D", // ink — readable as text/links on light
         },
         // Status-only semantics (never decorative): green = on-track/done,
         // red = missed/needs-action. Per the Coach Bob color system.

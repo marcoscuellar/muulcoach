@@ -110,11 +110,11 @@ export default function AdhdTax({ onSetAlarm }: { onSetAlarm: (a: DepartureAlarm
           </div>
 
           {isPast ? (
-            <div className="mt-4 rounded-[10px] bg-[#3a2420] px-4 py-3 text-[13px] leading-[1.45] text-[#ffb9a3]">
+            <div className="mt-4 rounded-[10px] bg-white/[0.08] px-4 py-3 text-[13px] leading-[1.45] text-onink">
               {t.pastWarning}
             </div>
           ) : armed ? (
-            <div className="mt-4 flex items-center gap-2 rounded-[10px] bg-[#1e2a24] px-4 py-3 text-[13px] leading-[1.45] text-verified">
+            <div className="mt-4 flex items-center gap-2 rounded-[10px] bg-white/[0.08] px-4 py-3 text-[13px] leading-[1.45] text-onink">
               <span>●</span> {t.alarmSet(fmtTime(computed.goAt))}
             </div>
           ) : (

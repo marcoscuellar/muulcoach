@@ -76,18 +76,18 @@ export const WingmanIcon = (p: IconProps) => (
   </Base>
 );
 
-// Official Coach Bob mark. Brand colors centralized here — change once to recolor.
-const BRAND_ACCENT = "#8C2F3D"; // burgundy
-const BRAND_CREAM = "#F4E7EA"; // soft cream — the light that reads on burgundy/navy
+// Official Coach Bob mark. Monochrome — ink tile + bone glyph (and inverse).
+const BRAND_INK = "#1B1B1D"; // near-black
+const BRAND_BONE = "#ECE6DA"; // warm off-white
 
-/** The official Coach Bob "b" mark — cream glyph on a burgundy tile. */
+/** The official Coach Bob "b" mark — bone glyph on an ink tile (for light surfaces). */
 export function MuulMark({ size = 32 }: { size?: number; radius?: number }) {
-  return <CoachBobMark size={size} square={BRAND_ACCENT} glyph={BRAND_CREAM} />;
+  return <CoachBobMark size={size} square={BRAND_INK} glyph={BRAND_BONE} />;
 }
 
-/** Inverted mark — burgundy glyph on a cream tile (pops inside dark navy cards). */
+/** Inverted mark — ink glyph on a bone tile (pops inside dark ink cards). */
 export function MuulMarkVolt({ size = 26 }: { size?: number; radius?: number }) {
-  return <CoachBobMark size={size} square={BRAND_CREAM} glyph={BRAND_ACCENT} />;
+  return <CoachBobMark size={size} square={BRAND_BONE} glyph={BRAND_INK} />;
 }
 
 // Literal lowercase "b" lockup — matches the login email.

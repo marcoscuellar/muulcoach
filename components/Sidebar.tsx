@@ -73,12 +73,12 @@ export default function Sidebar({ userEmail, demo = false }: { userEmail?: strin
               key={href}
               href={href}
               className={`flex w-full items-center gap-[11px] rounded-btn px-[13px] py-[11px] text-left font-display text-sm font-semibold transition-colors ${
-                active ? "bg-volt text-white" : "bg-paper text-volt hover:bg-surface"
+                active ? "bg-paper text-volt shadow-sm" : "bg-transparent text-onink-soft hover:bg-white/[0.06] hover:text-white"
               }`}
             >
               <Icon />
               {label}
-              {star && !active && <span className="ml-auto h-[7px] w-[7px] rounded-full bg-volt" />}
+              {star && !active && <span className="ml-auto h-[7px] w-[7px] rounded-full bg-onink-aqua" />}
             </Link>
           );
         })}
@@ -93,7 +93,7 @@ export default function Sidebar({ userEmail, demo = false }: { userEmail?: strin
               key={href}
               href={href}
               className={`flex w-full items-center gap-[11px] rounded-btn px-[13px] py-[11px] text-left font-display text-sm font-semibold transition-colors ${
-                active ? "bg-volt text-white" : "bg-paper text-volt hover:bg-surface"
+                active ? "bg-paper text-volt shadow-sm" : "bg-transparent text-onink-soft hover:bg-white/[0.06] hover:text-white"
               }`}
             >
               <Icon />

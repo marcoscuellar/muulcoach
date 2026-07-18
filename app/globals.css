@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 :root {
-  --volt: #8c2f3d;
-  --ink: #1b2a4a;
+  --volt: #1b1b1d;
+  --ink: #1b1b1d;
   --paper: #ffffff;
-  --surface: #f3f5f8;
-  --flare: #8c2f3d;
+  --surface: #ece6da;
+  --flare: #1b1b1d;
 }
 
 * {
@@ -33,7 +33,7 @@ a {
   text-decoration: none;
 }
 a:hover {
-  color: #702530;
+  color: #555049;
 }
 
 textarea,
@@ -56,6 +56,6 @@ input:focus {
   height: 10px;
 }
 ::-webkit-scrollbar-thumb {
-  background: #d5dce6;
+  background: #d8d2c6;
   border-radius: 10px;
 }

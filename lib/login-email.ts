@@ -1,9 +1,9 @@
 // Branded magic-link email for Coach Bob. Table + inline styles for broad
 // email-client compatibility (Gmail/Outlook strip <style> and SVG).
 
-const NAVY = "#1B2A4A";
-const BURGUNDY = "#8C2F3D";
-const CREAM = "#F4E7EA";
+const NAVY = "#1B1B1D";
+const BURGUNDY = "#1B1B1D";
+const CREAM = "#ECE6DA";
 const GRAY_BG = "#F3F5F8";
 const MUTED = "#6B7688";
 
