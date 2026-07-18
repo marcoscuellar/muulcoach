@@ -62,9 +62,21 @@ export default function OnboardingFlow() {
                 Hey — I&apos;m {COACH_NAME}.
               </h1>
               <p className="mt-3 text-[16px] leading-[1.5] text-muted-deep">
-                I&apos;m your accountability coach. My job is simple: help you pick what actually matters, build a
-                real plan, and keep you moving — one physical step at a time. Not a nag, not a therapist.
+                I&apos;m your accountability coach. My job is simple:
               </p>
+              <ul className="mt-3 flex flex-col gap-[10px]">
+                {[
+                  "Help you pick what actually matters",
+                  "Build a real plan",
+                  "Keep you moving — one physical step at a time",
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-[16px] leading-[1.4] text-muted-deep">
+                    <span className="mt-[7px] h-[7px] w-[7px] flex-none rounded-full bg-volt" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-3 text-[15px] font-semibold text-ink">Not a nag, not a therapist.</p>
               <p className="mt-3 text-[15px] leading-[1.5] text-muted-fog">
                 First, two quick questions so I know how to talk to you. Takes 20 seconds.
               </p>

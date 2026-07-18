@@ -2,6 +2,7 @@ import NextAuth from "next-auth";
 import Resend from "next-auth/providers/resend";
 import { UpstashRedisAdapter } from "@auth/upstash-redis-adapter";
 import { Redis } from "@upstash/redis";
+import { loginEmailHtml, loginEmailText, loginEmailSubject } from "@/lib/login-email";
 
 // Real accounts — NextAuth (Auth.js v5) + Resend magic-link email + the
 // ollin-kv (Upstash Redis) store. Matches the OLLIN Tracker stack.
@@ -29,6 +30,26 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       // Set EMAIL_FROM to a Resend-verified sender for real users.
       // onboarding@resend.dev works out of the box but only emails your own address.
       from: process.env.EMAIL_FROM || "onboarding@resend.dev",
+      // Branded Coach Bob magic-link email (overrides Auth.js's plain default).
+      async sendVerificationRequest({ identifier, url, provider }) {
+        const res = await fetch("https://api.resend.com/emails", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${provider.apiKey ?? process.env.RESEND_API_KEY}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            from: provider.from,
+            to: identifier,
+            subject: loginEmailSubject(),
+            html: loginEmailHtml(url),
+            text: loginEmailText(url),
+          }),
+        });
+        if (!res.ok) {
+          throw new Error(`Resend send failed: ${res.status} ${await res.text()}`);
+        }
+      },
     }),
   ],
   pages: { signIn: "/login" },
