@@ -21,10 +21,11 @@ export type GoalState = "active" | "draft" | "paused";
 export type ProgressLog = { id: string; at: number; note: string };
 
 // The goal's domain — drives which two tools show in the sidebar (see
-// lib/goalTools). Add a new type here + one entry in GOAL_TOOLS to extend.
-export type GoalType = "linkedin" | "fitness";
-export const GOAL_TYPES: GoalType[] = ["linkedin", "fitness"];
-export const DEFAULT_GOAL_TYPE: GoalType = "linkedin";
+// lib/goalTools). "generic" is the fallback for goals that are neither
+// linkedin nor fitness. Add a new type here + one entry in GOAL_TOOLS to extend.
+export type GoalType = "linkedin" | "fitness" | "generic";
+export const GOAL_TYPES: GoalType[] = ["linkedin", "fitness", "generic"];
+export const DEFAULT_GOAL_TYPE: GoalType = "generic";
 
 /** Coerce arbitrary input (e.g. from Coach Bob) to a known goal type. */
 export function normalizeGoalType(value: unknown): GoalType {

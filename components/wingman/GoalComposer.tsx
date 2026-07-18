@@ -6,6 +6,7 @@ import { WINGMAN, GOAL_TYPES, DEFAULT_GOAL_TYPE, type GoalType } from "@/lib/win
 const TYPE_LABEL: Record<GoalType, string> = {
   linkedin: "LinkedIn",
   fitness: "Fitness",
+  generic: "Other",
 };
 
 // ===========================================================================

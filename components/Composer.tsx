@@ -4,7 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { ComposeIcon } from "@/components/icons";
 import { muulComplete } from "@/lib/muul-client";
-import { ANGLES, REFINES, DEFAULT_FIELD, DEFAULT_AUTHOR_NAME, DEFAULT_AUTHOR_TITLE, writerSys } from "@/lib/prompts";
+import { ANGLES, REFINES, DEFAULT_FIELD, DEFAULT_AUTHOR_NAME, DEFAULT_AUTHOR_TITLE, writerSys, genericSys } from "@/lib/prompts";
+import { loadGoals, getActiveGoal, type Goal } from "@/lib/wingman";
 
 function initials(name: string) {
   return name.split(/\s+/).map((w) => w[0]).slice(0, 2).join("").toUpperCase() || "YN";
@@ -20,9 +21,19 @@ export default function Composer() {
   const [error, setError] = useState("");
   const [copied, setCopied] = useState(false);
   const [scheduled, setScheduled] = useState(false);
+  const [goal, setGoal] = useState<Goal | null>(null);
   const copyTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const schedTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const seeded = useRef(false);
+
+  // The active goal decides the composer's brain: "generic" goals run the
+  // generic prompt (work from the goal itself); linkedin/fitness keep the
+  // existing LinkedIn writer.
+  useEffect(() => {
+    setGoal(getActiveGoal(loadGoals()));
+  }, []);
+  const isGeneric = goal?.type === "generic";
+  const sysPrompt = isGeneric && goal ? genericSys(goal.title, goal.microAction) : writerSys(field);
 
   // Seed idea/angle from a Trending or Calendar "Draft a take" link.
   useEffect(() => {
@@ -47,16 +58,18 @@ export default function Composer() {
       setError("Add a thought first — even a few words.");
       return;
     }
-    const a = ANGLES.find((x) => x.id === angle)!;
     setLoading(true);
     setError("");
     setCopied(false);
     setScheduled(false);
     try {
+      const content = isGeneric
+        ? `Here's what I've got: "${idea.trim()}". Help me write what this goal needs.`
+        : `Write a LinkedIn post.\n\nAngle: ${ANGLES.find((x) => x.id === angle)!.brief}\n\nMy raw idea: "${idea.trim()}"`;
       const text = await muulComplete({
-        system: writerSys(field),
+        system: sysPrompt,
         max_tokens: 800,
-        messages: [{ role: "user", content: `Write a LinkedIn post.\n\nAngle: ${a.brief}\n\nMy raw idea: "${idea.trim()}"` }],
+        messages: [{ role: "user", content }],
       });
       setDraft(text.trim());
     } catch (e) {
@@ -73,13 +86,10 @@ export default function Composer() {
     setCopied(false);
     setScheduled(false);
     try {
-      const text = await muulComplete({
-        system: writerSys(field),
-        max_tokens: 800,
-        messages: [
-          { role: "user", content: `Here is my current LinkedIn post:\n\n"""\n${draft}\n"""\n\n${instr}\n\nReturn ONLY the revised post.` },
-        ],
-      });
+      const content = isGeneric
+        ? `Here's my current draft:\n\n"""\n${draft}\n"""\n\n${instr}\n\nReturn ONLY the revised text.`
+        : `Here is my current LinkedIn post:\n\n"""\n${draft}\n"""\n\n${instr}\n\nReturn ONLY the revised post.`;
+      const text = await muulComplete({ system: sysPrompt, max_tokens: 800, messages: [{ role: "user", content }] });
       setDraft(text.trim());
     } catch (e) {
       setError(e instanceof Error ? e.message : "Coach Bob couldn’t revise that just now. Try again.");
