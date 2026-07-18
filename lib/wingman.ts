@@ -87,6 +87,50 @@ export function loadGoals(): Goal[] {
   }
 }
 
+/** Append a goal to the store, preserving everything else (alarms, etc.). */
+export function addGoal(goal: Goal): void {
+  if (typeof window === "undefined") return;
+  try {
+    const store = JSON.parse(localStorage.getItem(WINGMAN_STORAGE_KEY) || "{}");
+    store.goals = [...(Array.isArray(store.goals) ? store.goals : []), goal];
+    localStorage.setItem(WINGMAN_STORAGE_KEY, JSON.stringify(store));
+  } catch {
+    /* ignore */
+  }
+}
+
+/** How many goals are currently active (not done) — for the guardrail cap. */
+export function activeGoalCount(): number {
+  return loadGoals().filter((g) => g.state === "active" && !g.done).length;
+}
+
+/**
+ * Build a Goal from Coach Bob's captured fields. If there's a first step and
+ * room under the hard cap it lands in Active; otherwise it's parked in Drafts.
+ */
+export function goalFromCapture(input: {
+  title: string;
+  microAction?: string;
+  outcome?: string;
+  cadence?: string;
+}): Goal {
+  const micro = (input.microAction || "").trim();
+  const hasRoom = activeGoalCount() < ACTIVE_GOAL_HARD_CAP;
+  return {
+    id: newId(),
+    title: input.title.trim(),
+    microAction: micro,
+    state: micro && hasRoom ? "active" : "draft",
+    done: false,
+    createdAt: Date.now(),
+    checkInAt: null,
+    subTasks: [],
+    outcome: input.outcome?.trim() || undefined,
+    cadence: input.cadence?.trim() || undefined,
+    logs: [],
+  };
+}
+
 /** Compact, prompt-friendly summary of active goals for Coach Bob's context. */
 export function goalsSummary(goals: Goal[]): string {
   const active = goals.filter((g) => g.state === "active" && !g.done);

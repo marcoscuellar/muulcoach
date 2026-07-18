@@ -6,12 +6,74 @@ import { MuulMarkVolt } from "@/components/icons";
 import { muulComplete } from "@/lib/muul-client";
 import { COACH_CHIPS } from "@/lib/prompts";
 import { loadProfile, coachBobSystem, COACH_NAME, type Profile } from "@/lib/profile";
-import { loadGoals, goalsSummary } from "@/lib/wingman";
+import {
+  loadGoals,
+  goalsSummary,
+  addGoal,
+  goalFromCapture,
+  activeGoalCount,
+  ACTIVE_GOAL_HARD_CAP,
+} from "@/lib/wingman";
 
 type Msg = { role: "coach" | "me"; text: string };
+type GoalCapture = { title: string; microAction?: string; outcome?: string; cadence?: string };
+
+// Coach Bob proposes a goal by appending a hidden control block to his reply.
+// We parse it out, hide it from the bubble, and offer to set the goal up.
+const GOAL_PROTOCOL = `
+GOAL SETUP:
+When the user has landed on a concrete goal they want to pursue, help them commit to it.
+At the VERY END of that message, append one control block, exactly:
+[[GOAL]]{"title":"...","microAction":"...","outcome":"...","cadence":"..."}[[/GOAL]]
+- title: short, imperative name of the goal
+- microAction: the ONE small physical first step (required — the low-activation move)
+- outcome: what "done" looks like (optional; use "" if unknown)
+- cadence: when/how often (optional; use "" if unknown)
+Rules: only include the block once you both agree on the goal. Never mention the block,
+the brackets, or JSON in your visible sentence — it's a silent signal the app reads.
+Write your normal coaching reply first, then the block on its own at the end.`;
+
+function extractGoal(reply: string): { text: string; goal: GoalCapture | null } {
+  const m = reply.match(/\[\[GOAL\]\]([\s\S]*?)\[\[\/GOAL\]\]/);
+  if (!m) return { text: reply, goal: null };
+  const text = reply.replace(m[0], "").trim();
+  try {
+    const parsed = JSON.parse(m[1].trim());
+    if (parsed && typeof parsed.title === "string" && parsed.title.trim()) {
+      return { text, goal: parsed as GoalCapture };
+    }
+  } catch {
+    /* malformed — just strip it */
+  }
+  return { text, goal: null };
+}
 
 // Coach Bob's office — the back-and-forth. He adapts to the user's coaching
 // profile and can see their active goals. Supports voice-to-text dictation.
+// The conversation persists to localStorage so Coach Bob doesn't start over
+// every time you leave the tab.
+
+const CHAT_KEY = "muul-coach-chat-v1";
+
+function loadChat(): Msg[] | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = localStorage.getItem(CHAT_KEY);
+    if (!raw) return null;
+    const arr = JSON.parse(raw);
+    return Array.isArray(arr) && arr.length ? (arr as Msg[]) : null;
+  } catch {
+    return null;
+  }
+}
+
+function saveChat(messages: Msg[]) {
+  try {
+    localStorage.setItem(CHAT_KEY, JSON.stringify(messages));
+  } catch {
+    /* ignore */
+  }
+}
 
 function openingLine(profile: Profile | null): string {
   const name = profile?.name && profile.name !== "friend" ? `${profile.name}, ` : "";
@@ -33,6 +95,7 @@ export default function Coach() {
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
   const [thinking, setThinking] = useState(false);
+  const [pendingGoal, setPendingGoal] = useState<GoalCapture | null>(null);
   const [listening, setListening] = useState(false);
   const [voiceSupported, setVoiceSupported] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -42,8 +105,10 @@ export default function Coach() {
   useEffect(() => {
     const p = loadProfile();
     setProfile(p);
-    setSystemPrompt(coachBobSystem(p, goalsSummary(loadGoals())));
-    setMessages([{ role: "coach", text: openingLine(p) }]);
+    setSystemPrompt(coachBobSystem(p, goalsSummary(loadGoals())) + "\n" + GOAL_PROTOCOL);
+    // Restore the saved conversation so Coach Bob picks up where you left off.
+    const saved = loadChat();
+    setMessages(saved ?? [{ role: "coach", text: openingLine(p) }]);
 
     // Voice-to-text (Web Speech API) — optional, best-effort.
     const SR = (typeof window !== "undefined" &&
@@ -75,6 +140,37 @@ export default function Coach() {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, thinking]);
 
+  // Persist the conversation on every change so it survives leaving the tab.
+  useEffect(() => {
+    if (messages.length) saveChat(messages);
+  }, [messages]);
+
+  const resetChat = () => {
+    const fresh: Msg[] = [{ role: "coach", text: openingLine(profile) }];
+    setMessages(fresh);
+    saveChat(fresh);
+    setPendingGoal(null);
+  };
+
+  // Coach Bob captured a goal → create it in the Goals system and confirm.
+  const confirmGoal = () => {
+    if (!pendingGoal) return;
+    const goal = goalFromCapture(pendingGoal);
+    addGoal(goal);
+    setSystemPrompt(coachBobSystem(profile, goalsSummary(loadGoals())) + "\n" + GOAL_PROTOCOL);
+
+    let note: string;
+    if (goal.state === "active") {
+      note = `Locked in. "${goal.title}" is now active — your only job: ${goal.microAction}. It's on your Goals page.`;
+    } else if (!goal.microAction) {
+      note = `Parked "${goal.title}" in Drafts — it needs one physical first move before it goes Active. Find it on your Goals page.`;
+    } else {
+      note = `Your active list is full (${ACTIVE_GOAL_HARD_CAP}), so "${goal.title}" is parked in Drafts. Finish or pause one and I'll promote it.`;
+    }
+    setMessages((prev) => [...prev, { role: "coach", text: note }]);
+    setPendingGoal(null);
+  };
+
   const toggleVoice = () => {
     const rec = recognitionRef.current;
     if (!rec) return;
@@ -104,7 +200,9 @@ export default function Coach() {
         content: m.text,
       }));
       const reply = await muulComplete({ system: systemPrompt, max_tokens: 400, messages: apiMsgs });
-      setMessages([...history, { role: "coach", text: reply.trim() || "…" }]);
+      const { text: replyText, goal } = extractGoal(reply);
+      setMessages([...history, { role: "coach", text: replyText.trim() || "…" }]);
+      if (goal) setPendingGoal(goal);
     } catch (e) {
       const text = e instanceof Error ? e.message : "Lost you for a second — say that again?";
       setMessages([...history, { role: "coach", text }]);
@@ -126,9 +224,14 @@ export default function Coach() {
             {profile ? `${profile.style.toUpperCase()} · IN YOUR CORNER` : "IN YOUR CORNER"}
           </div>
         </div>
-        <Link href="/goals" className="ml-auto font-mono text-[11px] text-olive">
-          VIEW THE PLAN →
-        </Link>
+        <div className="ml-auto flex items-center gap-3">
+          <button onClick={resetChat} className="font-mono text-[11px] text-muted-fog hover:text-ink">
+            NEW SESSION
+          </button>
+          <Link href="/goals" className="font-mono text-[11px] text-olive">
+            VIEW THE PLAN →
+          </Link>
+        </div>
       </div>
 
       <div ref={scrollRef} className="flex flex-1 flex-col gap-[14px] overflow-y-auto pb-2">
@@ -143,7 +246,7 @@ export default function Coach() {
               )}
               <div
                 className={`max-w-[80%] rounded-[14px] px-[15px] py-3 text-[15px] leading-[1.5] ${
-                  isCoach ? "rounded-tl-[4px] border border-muted-line bg-surface text-ink" : "rounded-tr-[4px] bg-volt text-white"
+                  isCoach ? "rounded-tl-[4px] bg-ink text-onink" : "rounded-tr-[4px] border border-muted-line bg-surface text-ink"
                 }`}
               >
                 {m.text}
@@ -156,12 +259,38 @@ export default function Coach() {
             <div className="flex h-[30px] w-[30px] flex-shrink-0 items-center justify-center rounded-lg bg-ink">
               <MuulMarkVolt size={16} radius={4} />
             </div>
-            <div className="rounded-[14px] rounded-tl-[4px] border border-muted-line bg-surface px-4 py-3 font-mono text-[12px] text-olive">
+            <div className="rounded-[14px] rounded-tl-[4px] bg-ink px-4 py-3 font-mono text-[12px] text-onink-faint">
               thinking…
             </div>
           </div>
         )}
       </div>
+
+      {pendingGoal && (
+        <div className="animate-muulrise rounded-card border-[1.5px] border-volt/30 bg-tint-coral px-4 py-[14px]">
+          <div className="font-mono text-[10px] tracking-[0.08em] text-coral-text">SET THIS UP AS A GOAL?</div>
+          <div className="mt-1 font-display text-[15px] font-bold text-ink">{pendingGoal.title}</div>
+          {pendingGoal.microAction && (
+            <div className="mt-[3px] text-[13px] text-slate">First step: {pendingGoal.microAction}</div>
+          )}
+          {pendingGoal.outcome && <div className="text-[13px] text-slate">Done looks like: {pendingGoal.outcome}</div>}
+          {pendingGoal.cadence && <div className="text-[13px] text-slate">Cadence: {pendingGoal.cadence}</div>}
+          <div className="mt-3 flex gap-2">
+            <button
+              onClick={confirmGoal}
+              className="rounded-[9px] border-none bg-volt px-4 py-2 font-display text-[13px] font-bold text-white"
+            >
+              Add to my goals
+            </button>
+            <button
+              onClick={() => setPendingGoal(null)}
+              className="rounded-[9px] border-[1.5px] border-muted-line bg-paper px-4 py-2 font-display text-[13px] font-semibold text-ink"
+            >
+              Not yet
+            </button>
+          </div>
+        </div>
+      )}
 
       <div className="flex flex-wrap gap-2">
         {COACH_CHIPS.map((c) => (
