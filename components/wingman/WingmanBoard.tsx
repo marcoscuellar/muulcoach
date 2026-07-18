@@ -43,6 +43,7 @@ export default function WingmanBoard() {
   const [capMsg, setCapMsg] = useState<string | null>(null);
   const [, forceTick] = useState(0);
   const timers = useRef<Record<string, ReturnType<typeof setTimeout>>>({});
+  const firstPersist = useRef(true);
 
   // ---- Load persisted state --------------------------------------------
   useEffect(() => {
@@ -60,6 +61,12 @@ export default function WingmanBoard() {
   // ---- Persist (localStorage + account sync) ----------------------------
   useEffect(() => {
     if (!hydrated) return;
+    // Skip the first run (the redundant write of just-loaded data) so a fresh
+    // device doesn't push an empty state over the account copy before sync.
+    if (firstPersist.current) {
+      firstPersist.current = false;
+      return;
+    }
     const store = { goals, alarms, updatedAt: Date.now() };
     try {
       localStorage.setItem(WINGMAN_STORAGE_KEY, JSON.stringify(store));

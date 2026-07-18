@@ -14,6 +14,7 @@ import {
   activeGoalCount,
   ACTIVE_GOAL_HARD_CAP,
 } from "@/lib/wingman";
+import { pushUserData, SYNCED_EVENT, CHAT_STORAGE_KEY } from "@/lib/sync";
 
 type Msg = { role: "coach" | "me"; text: string };
 type GoalCapture = { title: string; microAction?: string; outcome?: string; cadence?: string };
@@ -53,14 +54,14 @@ function extractGoal(reply: string): { text: string; goal: GoalCapture | null } 
 // The conversation persists to localStorage so Coach Bob doesn't start over
 // every time you leave the tab.
 
-const CHAT_KEY = "muul-coach-chat-v1";
-
 function loadChat(): Msg[] | null {
   if (typeof window === "undefined") return null;
   try {
-    const raw = localStorage.getItem(CHAT_KEY);
+    const raw = localStorage.getItem(CHAT_STORAGE_KEY);
     if (!raw) return null;
-    const arr = JSON.parse(raw);
+    const parsed = JSON.parse(raw);
+    // New shape { messages, updatedAt }; tolerate the old bare-array shape.
+    const arr = Array.isArray(parsed) ? parsed : parsed?.messages;
     return Array.isArray(arr) && arr.length ? (arr as Msg[]) : null;
   } catch {
     return null;
@@ -69,7 +70,9 @@ function loadChat(): Msg[] | null {
 
 function saveChat(messages: Msg[]) {
   try {
-    localStorage.setItem(CHAT_KEY, JSON.stringify(messages));
+    const store = { messages, updatedAt: Date.now() };
+    localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(store));
+    pushUserData("chat", store); // sync to the account (no-op when signed out)
   } catch {
     /* ignore */
   }
@@ -141,9 +144,21 @@ export default function Coach() {
   }, [messages, thinking]);
 
   // Persist the conversation on every change so it survives leaving the tab.
+  // Only once there's a real user message — a fresh opening-line-only state
+  // must not overwrite a real conversation syncing in from the account.
   useEffect(() => {
-    if (messages.length) saveChat(messages);
+    if (messages.some((m) => m.role === "me")) saveChat(messages);
   }, [messages]);
+
+  // If the account copy syncs in on load, adopt it (cross-device).
+  useEffect(() => {
+    const onSynced = () => {
+      const saved = loadChat();
+      if (saved) setMessages(saved);
+    };
+    window.addEventListener(SYNCED_EVENT, onSynced);
+    return () => window.removeEventListener(SYNCED_EVENT, onSynced);
+  }, []);
 
   const resetChat = () => {
     const fresh: Msg[] = [{ role: "coach", text: openingLine(profile) }];

@@ -33,3 +33,6 @@ export function pushUserData(key: SyncKey, value: unknown): void {
 
 /** Event fired after account data is pulled into localStorage on load. */
 export const SYNCED_EVENT = "coachbob:synced";
+
+/** localStorage key for the chat transcript (shared by Coach + SyncProvider). */
+export const CHAT_STORAGE_KEY = "muul-coach-chat-v1";

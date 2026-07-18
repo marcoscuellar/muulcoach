@@ -6,6 +6,8 @@
 // accounts land — the shape stays identical).
 // ===========================================================================
 
+import { pushUserData } from "@/lib/sync";
+
 export const PROFILE_KEY = "muul-profile-v1";
 
 export type CoachStyle = "tough" | "direct" | "gentle" | "structured";
@@ -49,7 +51,9 @@ export function loadProfile(): Profile | null {
 
 export function saveProfile(p: Profile) {
   try {
-    localStorage.setItem(PROFILE_KEY, JSON.stringify(p));
+    const stamped = { ...p, updatedAt: Date.now() };
+    localStorage.setItem(PROFILE_KEY, JSON.stringify(stamped));
+    pushUserData("profile", stamped); // sync to the account (no-op when signed out)
   } catch {
     /* ignore */
   }
