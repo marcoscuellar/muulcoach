@@ -1,7 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { WINGMAN } from "@/lib/wingman";
+import { WINGMAN, GOAL_TYPES, DEFAULT_GOAL_TYPE, type GoalType } from "@/lib/wingman";
+
+const TYPE_LABEL: Record<GoalType, string> = {
+  linkedin: "LinkedIn",
+  fitness: "Fitness",
+};
 
 // ===========================================================================
 // CommitmentThresholdLogic — component
@@ -14,13 +19,15 @@ import { WINGMAN } from "@/lib/wingman";
 export default function GoalComposer({
   onCreate,
 }: {
-  onCreate: (title: string, microAction: string, outcome: string, cadence: string) => void; // micro "" => Draft
+  // micro "" => Draft
+  onCreate: (title: string, microAction: string, outcome: string, cadence: string, type: GoalType) => void;
 }) {
   const c = WINGMAN.commitment;
   const [title, setTitle] = useState("");
   const [micro, setMicro] = useState("");
   const [outcome, setOutcome] = useState("");
   const [cadence, setCadence] = useState("");
+  const [type, setType] = useState<GoalType>(DEFAULT_GOAL_TYPE);
 
   const canSave = title.trim().length > 0;
   const hasMicro = micro.trim().length > 0;
@@ -28,11 +35,12 @@ export default function GoalComposer({
   const submit = (asDraft: boolean) => {
     if (!canSave) return;
     // CommitmentThresholdLogic: no micro-action (or explicit draft) => Draft state.
-    onCreate(title.trim(), asDraft ? "" : micro.trim(), outcome, cadence);
+    onCreate(title.trim(), asDraft ? "" : micro.trim(), outcome, cadence, type);
     setTitle("");
     setMicro("");
     setOutcome("");
     setCadence("");
+    setType(DEFAULT_GOAL_TYPE);
   };
 
   return (
@@ -40,6 +48,23 @@ export default function GoalComposer({
       <div className="mb-4 font-display text-[17px] font-semibold">{c.heading}</div>
 
       <div className="flex flex-col gap-4">
+        <div>
+          <div className="mb-1 font-mono text-[10px] tracking-[0.06em] text-muted-fog">WHAT KIND OF GOAL?</div>
+          <div className="flex gap-2">
+            {GOAL_TYPES.map((t) => (
+              <button
+                key={t}
+                onClick={() => setType(t)}
+                className={`rounded-[10px] border-[1.5px] px-3 py-[8px] font-display text-[13px] font-semibold transition-colors ${
+                  type === t ? "border-ink bg-ink text-white" : "border-muted-line bg-paper text-ink hover:border-ink"
+                }`}
+              >
+                {TYPE_LABEL[t]}
+              </button>
+            ))}
+          </div>
+        </div>
+
         <div>
           <div className="mb-1 font-mono text-[10px] tracking-[0.06em] text-muted-fog">{c.titleLabel}</div>
           <input

@@ -12,24 +12,36 @@ import {
   addGoal,
   goalFromCapture,
   activeGoalCount,
+  normalizeGoalType,
   ACTIVE_GOAL_HARD_CAP,
 } from "@/lib/wingman";
 import { pushUserData, SYNCED_EVENT, CHAT_STORAGE_KEY } from "@/lib/sync";
 
 type Msg = { role: "coach" | "me"; text: string };
-type GoalCapture = { title: string; microAction?: string; outcome?: string; cadence?: string };
+type GoalCapture = {
+  title: string;
+  microAction?: string;
+  outcome?: string;
+  cadence?: string;
+  type?: string;
+};
 
 // Coach Bob proposes a goal by appending a hidden control block to his reply.
 // We parse it out, hide it from the bubble, and offer to set the goal up.
+// He fills out the whole "sheet" — including the goal type, which decides the
+// tools the user gets in the sidebar.
 const GOAL_PROTOCOL = `
 GOAL SETUP:
-When the user has landed on a concrete goal they want to pursue, help them commit to it.
-At the VERY END of that message, append one control block, exactly:
-[[GOAL]]{"title":"...","microAction":"...","outcome":"...","cadence":"..."}[[/GOAL]]
+Your job is to help the user identify a concrete goal and fill out the whole plan for them —
+ask what they want, then propose the pieces so they don't face a blank form.
+When you've landed on a goal together, append one control block at the VERY END, exactly:
+[[GOAL]]{"title":"...","microAction":"...","outcome":"...","cadence":"...","type":"..."}[[/GOAL]]
 - title: short, imperative name of the goal
 - microAction: the ONE small physical first step (required — the low-activation move)
 - outcome: what "done" looks like (optional; use "" if unknown)
 - cadence: when/how often (optional; use "" if unknown)
+- type: classify the goal's domain. Use "fitness" for exercise / health / movement / training
+  goals; use "linkedin" for content / posting / professional-presence goals. Pick the closest.
 Rules: only include the block once you both agree on the goal. Never mention the block,
 the brackets, or JSON in your visible sentence — it's a silent signal the app reads.
 Write your normal coaching reply first, then the block on its own at the end.`;
@@ -283,7 +295,12 @@ export default function Coach() {
 
       {pendingGoal && (
         <div className="animate-muulrise rounded-card border-[1.5px] border-volt/30 bg-tint-coral px-4 py-[14px]">
-          <div className="font-mono text-[10px] tracking-[0.08em] text-coral-text">SET THIS UP AS A GOAL?</div>
+          <div className="flex items-center justify-between gap-2">
+            <div className="font-mono text-[10px] tracking-[0.08em] text-coral-text">SET THIS UP AS A GOAL?</div>
+            <span className="rounded-full bg-ink px-2 py-[2px] font-mono text-[9px] uppercase tracking-[0.08em] text-onink">
+              {normalizeGoalType(pendingGoal.type)}
+            </span>
+          </div>
           <div className="mt-1 font-display text-[15px] font-bold text-ink">{pendingGoal.title}</div>
           {pendingGoal.microAction && (
             <div className="mt-[3px] text-[13px] text-slate">First step: {pendingGoal.microAction}</div>

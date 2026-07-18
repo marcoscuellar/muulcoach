@@ -7,32 +7,28 @@ import {
   MuulMarkVolt,
   HomeIcon,
   ComposeIcon,
-  TrendingIcon,
   CalendarIcon,
   CoachIcon,
-  AnalyticsIcon,
-  LibraryIcon,
   WingmanIcon,
+  PlusIcon,
 } from "@/components/icons";
 import { STREAK_DAYS } from "@/lib/data";
 import { loadProfile } from "@/lib/profile";
+import { loadGoals, getActiveGoal, GOALS_EVENT, DEFAULT_GOAL_TYPE, type GoalType } from "@/lib/wingman";
+import { GOAL_TOOLS } from "@/lib/goalTools";
+import { SYNCED_EVENT } from "@/lib/sync";
 import SignOutButton from "@/components/SignOutButton";
 import DemoToggle from "@/components/DemoToggle";
 
-// Coach Bob is the main feature — the coaching core leads, the LinkedIn
-// content tools sit underneath as a supporting toolbox.
-const PRIMARY_NAV = [
+// Fixed nav — always visible. The two tools below adapt to the active goal.
+const FIXED_NAV = [
   { href: "/", label: "Home", Icon: HomeIcon },
   { href: "/coach", label: "Chat", Icon: CoachIcon, star: true },
   { href: "/goals", label: "Goals", Icon: WingmanIcon },
 ];
-const CONTENT_NAV = [
-  { href: "/composer", label: "Composer", Icon: ComposeIcon },
-  { href: "/trending", label: "Trending", Icon: TrendingIcon },
-  { href: "/calendar", label: "Calendar", Icon: CalendarIcon },
-  { href: "/analytics", label: "Analytics", Icon: AnalyticsIcon },
-  { href: "/library", label: "Library", Icon: LibraryIcon },
-];
+
+// The two dynamic tool slots always map to the same pages — only labels change.
+const SLOT_ICON = { make: ComposeIcon, track: CalendarIcon };
 
 function initials(name: string) {
   return (
@@ -50,13 +46,37 @@ export default function Sidebar({ userEmail, demo = false }: { userEmail?: strin
   const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
   const [profileName, setProfileName] = useState<string>("");
+  const [activeType, setActiveType] = useState<GoalType | null>(null);
+
   useEffect(() => {
     const p = loadProfile();
     if (p?.name && p.name !== "friend") setProfileName(p.name);
   }, []);
 
+  // Track the active goal's type so the toolbox reflects what the user is
+  // working on. Re-read on navigation, on goal changes, and on account sync.
+  useEffect(() => {
+    const read = () => {
+      const g = getActiveGoal(loadGoals());
+      setActiveType(g ? g.type ?? DEFAULT_GOAL_TYPE : null);
+    };
+    read();
+    window.addEventListener(GOALS_EVENT, read);
+    window.addEventListener(SYNCED_EVENT, read);
+    return () => {
+      window.removeEventListener(GOALS_EVENT, read);
+      window.removeEventListener(SYNCED_EVENT, read);
+    };
+  }, [pathname]);
+
   const displayName = profileName || (userEmail ? userEmail.split("@")[0] : "You");
   const subline = userEmail || "Not signed in";
+  const tools = activeType ? GOAL_TOOLS[activeType] : null;
+
+  const navLinkClass = (active: boolean) =>
+    `flex w-full items-center gap-[11px] rounded-btn px-[13px] py-[11px] text-left font-display text-sm font-semibold transition-colors ${
+      active ? "bg-paper text-volt shadow-sm" : "bg-transparent text-onink-soft hover:bg-white/[0.06] hover:text-white"
+    }`;
 
   return (
     <aside className="flex flex-col gap-[26px] border-r border-white/10 bg-ink px-4 py-[22px] text-onink">
@@ -66,16 +86,10 @@ export default function Sidebar({ userEmail, demo = false }: { userEmail?: strin
       </div>
 
       <nav className="flex flex-col gap-1">
-        {PRIMARY_NAV.map(({ href, label, Icon, star }) => {
+        {FIXED_NAV.map(({ href, label, Icon, star }) => {
           const active = isActive(href);
           return (
-            <Link
-              key={href}
-              href={href}
-              className={`flex w-full items-center gap-[11px] rounded-btn px-[13px] py-[11px] text-left font-display text-sm font-semibold transition-colors ${
-                active ? "bg-paper text-volt shadow-sm" : "bg-transparent text-onink-soft hover:bg-white/[0.06] hover:text-white"
-              }`}
-            >
+            <Link key={href} href={href} className={navLinkClass(active)}>
               <Icon />
               {label}
               {star && !active && <span className="ml-auto h-[7px] w-[7px] rounded-full bg-onink-aqua" />}
@@ -83,24 +97,28 @@ export default function Sidebar({ userEmail, demo = false }: { userEmail?: strin
           );
         })}
 
-        <div className="mb-1 mt-4 px-[13px] font-mono text-[10px] tracking-[0.1em] text-onink-faint">
-          LINKEDIN TOOLBOX
-        </div>
-        {CONTENT_NAV.map(({ href, label, Icon }) => {
-          const active = isActive(href);
-          return (
-            <Link
-              key={href}
-              href={href}
-              className={`flex w-full items-center gap-[11px] rounded-btn px-[13px] py-[11px] text-left font-display text-sm font-semibold transition-colors ${
-                active ? "bg-paper text-volt shadow-sm" : "bg-transparent text-onink-soft hover:bg-white/[0.06] hover:text-white"
-              }`}
-            >
-              <Icon />
-              {label}
-            </Link>
-          );
-        })}
+        {tools ? (
+          // Active goal → its two tools (build ONCE; only labels differ by type).
+          (["make", "track"] as const).map((slot) => {
+            const Icon = SLOT_ICON[slot];
+            const { href, label } = tools[slot];
+            return (
+              <Link key={slot} href={href} className={navLinkClass(isActive(href))}>
+                <Icon />
+                {label}
+              </Link>
+            );
+          })
+        ) : (
+          // No active goal → let Coach Bob set the first one up (no empty section).
+          <Link
+            href="/coach"
+            className="mt-1 flex w-full items-center gap-[11px] rounded-btn border border-dashed border-white/25 px-[13px] py-[11px] font-display text-sm font-semibold text-onink-soft transition-colors hover:border-white/50 hover:text-white"
+          >
+            <PlusIcon />
+            Set your first goal
+          </Link>
+        )}
       </nav>
 
       <div className="mt-auto flex flex-col gap-[14px]">

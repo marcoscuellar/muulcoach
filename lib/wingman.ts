@@ -20,10 +20,22 @@ export type SubTask = { id: string; text: string; done: boolean };
 export type GoalState = "active" | "draft" | "paused";
 export type ProgressLog = { id: string; at: number; note: string };
 
+// The goal's domain — drives which two tools show in the sidebar (see
+// lib/goalTools). Add a new type here + one entry in GOAL_TOOLS to extend.
+export type GoalType = "linkedin" | "fitness";
+export const GOAL_TYPES: GoalType[] = ["linkedin", "fitness"];
+export const DEFAULT_GOAL_TYPE: GoalType = "linkedin";
+
+/** Coerce arbitrary input (e.g. from Coach Bob) to a known goal type. */
+export function normalizeGoalType(value: unknown): GoalType {
+  return GOAL_TYPES.includes(value as GoalType) ? (value as GoalType) : DEFAULT_GOAL_TYPE;
+}
+
 export type Goal = {
   id: string;
   title: string;
   microAction: string; // "" while a goal is still a Draft (the first physical step)
+  type: GoalType; // domain — decides the sidebar tools
   state: GoalState;
   done: boolean;
   createdAt: number;
@@ -33,6 +45,17 @@ export type Goal = {
   cadence?: string; // the schedule, e.g. "Mon/Wed/Fri, 20 min"
   logs?: ProgressLog[]; // how progress gets logged
 };
+
+/** Fired (client) whenever the goal store changes, so the nav can re-read. */
+export const GOALS_EVENT = "coachbob:goals";
+
+/**
+ * The one goal the user is "currently working on" — drives the sidebar tools.
+ * With up to 3–4 active goals, this is the first active (not-done) one.
+ */
+export function getActiveGoal(goals: Goal[]): Goal | null {
+  return goals.find((g) => g.state === "active" && !g.done) ?? null;
+}
 
 // CommitmentThresholdLogic guardrail: keep the active list small so Coach Bob
 // can hold the user to what actually matters. Soft target 3, hard ceiling 4.
@@ -101,6 +124,7 @@ export function addGoal(goal: Goal): void {
     };
     localStorage.setItem(WINGMAN_STORAGE_KEY, JSON.stringify(next));
     pushUserData("wingman", next); // sync to the account (no-op when signed out)
+    window.dispatchEvent(new Event(GOALS_EVENT)); // let the nav re-read
   } catch {
     /* ignore */
   }
@@ -120,6 +144,7 @@ export function goalFromCapture(input: {
   microAction?: string;
   outcome?: string;
   cadence?: string;
+  type?: string;
 }): Goal {
   const micro = (input.microAction || "").trim();
   const hasRoom = activeGoalCount() < ACTIVE_GOAL_HARD_CAP;
@@ -127,6 +152,7 @@ export function goalFromCapture(input: {
     id: newId(),
     title: input.title.trim(),
     microAction: micro,
+    type: normalizeGoalType(input.type),
     state: micro && hasRoom ? "active" : "draft",
     done: false,
     createdAt: Date.now(),

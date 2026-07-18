@@ -4,12 +4,14 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   WINGMAN,
   WINGMAN_STORAGE_KEY,
+  GOALS_EVENT,
   ACTIVE_GOAL_HARD_CAP,
   ACTIVE_GOAL_SOFT_CAP,
   newId,
   fmtTime,
   isStuck,
   type Goal,
+  type GoalType,
   type DepartureAlarm,
 } from "@/lib/wingman";
 import { loadProfile, COACH_NAME, type Profile } from "@/lib/profile";
@@ -74,6 +76,7 @@ export default function WingmanBoard() {
       /* ignore */
     }
     pushUserData("wingman", store); // cross-device (no-op when signed out)
+    window.dispatchEvent(new Event(GOALS_EVENT)); // let the sidebar re-read
   }, [goals, alarms, hydrated]);
 
   // When the account copy is pulled in on load, adopt it into state.
@@ -106,7 +109,7 @@ export default function WingmanBoard() {
   const activeCount = () => goals.filter((g) => g.state === "active" && !g.done).length;
 
   // ---- CommitmentThresholdLogic + goal guardrail -----------------------
-  const createGoal = (title: string, microAction: string, outcome: string, cadence: string) => {
+  const createGoal = (title: string, microAction: string, outcome: string, cadence: string, type: GoalType) => {
     const hasMicro = microAction.trim().length > 0;
     // Guardrail: never let the active list exceed the hard ceiling.
     if (hasMicro && activeCount() >= ACTIVE_GOAL_HARD_CAP) {
@@ -117,6 +120,7 @@ export default function WingmanBoard() {
       id: newId(),
       title,
       microAction: microAction.trim(),
+      type,
       state: hasMicro ? "active" : "draft", // no first move => Draft (hidden from Active)
       done: false,
       createdAt: Date.now(),
