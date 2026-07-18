@@ -248,7 +248,7 @@ export default function SupportWidget() {
                       style={{
                         width: 92,
                         height: 92,
-                        background: `conic-gradient(#8C2F3D ${progress}deg, rgba(255,255,255,.16) 0deg)`,
+                        background: `conic-gradient(#F4E7EA ${progress}deg, rgba(255,255,255,.16) 0deg)`,
                       }}
                     >
                       <div className="flex h-[72px] w-[72px] items-center justify-center rounded-full bg-[#0a0a0a] text-[18px] font-semibold tabular-nums text-white">

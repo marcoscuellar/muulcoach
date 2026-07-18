@@ -104,8 +104,8 @@ export default function Sidebar({ userEmail }: { userEmail?: string }) {
 
       <div className="mt-auto flex flex-col gap-[14px]">
         <div className="rounded-card bg-ink p-4">
-          <div className="flex items-center gap-2 font-display text-[15px] font-bold text-volt">
-            <span className="h-2 w-2 rounded-full bg-volt" />
+          <div className="flex items-center gap-2 font-display text-[15px] font-bold text-white">
+            <span className="h-2 w-2 rounded-full bg-white" />
             {STREAK_DAYS}-day streak
           </div>
           <div className="mt-2 font-mono text-[10px] tracking-[0.04em] text-onink-faint">

@@ -183,7 +183,7 @@ export default function WingmanBoard() {
       {/* Coach Bob intro */}
       <div className="rounded-panel border border-muted-line bg-ink p-6 text-onink">
         <div className="flex items-center justify-between">
-          <div className="font-mono text-[11px] tracking-[0.08em] text-volt">COACH BOB · THE PLAN</div>
+          <div className="font-mono text-[11px] tracking-[0.08em] text-white">COACH BOB · THE PLAN</div>
           <span className="font-mono text-[11px] text-onink-faint">
             {active.length}/{ACTIVE_GOAL_SOFT_CAP} active
           </span>

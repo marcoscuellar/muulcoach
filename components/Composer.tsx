@@ -177,7 +177,7 @@ export default function Composer() {
           </div>
           <div className="overflow-hidden rounded-card border border-muted-line bg-paper shadow-[0_18px_44px_-30px_rgba(16,23,26,0.45)]">
             <div className="flex items-center gap-3 px-5 py-[18px]">
-              <div className="flex h-[46px] w-[46px] flex-shrink-0 items-center justify-center rounded-full bg-ink font-display text-[17px] font-bold text-volt">
+              <div className="flex h-[46px] w-[46px] flex-shrink-0 items-center justify-center rounded-full bg-ink font-display text-[17px] font-bold text-white">
                 {initials(DEFAULT_AUTHOR_NAME)}
               </div>
               <div>

@@ -10,7 +10,7 @@ export default function HomePage() {
       <div className="grid grid-cols-4 gap-4">
         <div className="rounded-card bg-ink p-5">
           <div className="font-mono text-[10px] tracking-[0.06em] text-onink-faint">STREAK</div>
-          <div className="mt-[6px] font-display text-[38px] font-bold leading-[1.1] text-volt">{STREAK_DAYS}</div>
+          <div className="mt-[6px] font-display text-[38px] font-bold leading-[1.1] text-white">{STREAK_DAYS}</div>
           <div className="text-[12px] text-onink-faint">days in a row</div>
         </div>
         <div className="rounded-card border border-muted-line bg-surface p-5">
@@ -89,7 +89,7 @@ export default function HomePage() {
                 <span
                   key={i}
                   className="rounded-[4px]"
-                  style={{ aspectRatio: "1", background: `rgba(255,107,92,${op})` }}
+                  style={{ aspectRatio: "1", background: `rgba(140,47,61,${op})` }}
                 />
               ))}
             </div>

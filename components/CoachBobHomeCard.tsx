@@ -41,7 +41,7 @@ export default function CoachBobHomeCard() {
     <div className="rounded-card bg-ink p-[22px]">
       <div className="mb-3 flex items-center gap-[9px]">
         <MuulMarkVolt />
-        <span className="font-mono text-[11px] text-volt">{COACH_NAME.toUpperCase()}</span>
+        <span className="font-mono text-[11px] text-white">{COACH_NAME.toUpperCase()}</span>
         {active.length > 0 && (
           <span className="ml-auto font-mono text-[10px] text-onink-faint">{active.length} active</span>
         )}

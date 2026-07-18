@@ -72,7 +72,7 @@ export default function TrendingPage() {
       {/* Daily Brief */}
       <div className="rounded-panel border border-muted-line bg-ink p-[26px]">
         <div className="mb-[6px] flex items-center justify-between">
-          <div className="font-mono text-[11px] tracking-[0.08em] text-volt">THE DAILY BRIEF</div>
+          <div className="font-mono text-[11px] tracking-[0.08em] text-white">THE DAILY BRIEF</div>
           <span className="font-mono text-[10px] text-onink-faint">WED · JULY 16</span>
         </div>
         <div className="mb-[18px] font-display text-[20px] font-bold tracking-[-0.02em] text-[#EEF1F6]">

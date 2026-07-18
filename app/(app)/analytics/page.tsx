@@ -41,7 +41,7 @@ export default function AnalyticsPage() {
           <div className="mb-[18px] font-mono text-[11px] text-onink-faint">LAST 10 WEEKS · MON–FRI</div>
           <div className="grid grid-cols-10 gap-[5px]">
             {ANALYTICS_HEAT.map((op, i) => (
-              <span key={i} className="rounded-[3px]" style={{ aspectRatio: "1", background: `rgba(140,47,61,${op})` }} />
+              <span key={i} className="rounded-[3px]" style={{ aspectRatio: "1", background: `rgba(244,231,234,${op})` }} />
             ))}
           </div>
         </div>

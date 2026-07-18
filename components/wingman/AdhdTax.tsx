@@ -99,7 +99,7 @@ export default function AdhdTax({ onSetAlarm }: { onSetAlarm: (a: DepartureAlarm
           <div className="font-mono text-[10px] tracking-[0.06em] text-onink-faint">
             {t.taxNote(computed.baseMinutes, computed.bufferedMinutes)}
           </div>
-          <div className="mt-2 font-display text-[22px] font-bold leading-[1.2] text-volt">
+          <div className="mt-2 font-display text-[22px] font-bold leading-[1.2] text-white">
             {fmtTime(computed.goAt)}
           </div>
           <div className="mt-1 text-[14px] leading-[1.45]">
@@ -114,7 +114,7 @@ export default function AdhdTax({ onSetAlarm }: { onSetAlarm: (a: DepartureAlarm
               {t.pastWarning}
             </div>
           ) : armed ? (
-            <div className="mt-4 flex items-center gap-2 rounded-[10px] bg-[#1e2a24] px-4 py-3 text-[13px] leading-[1.45] text-volt">
+            <div className="mt-4 flex items-center gap-2 rounded-[10px] bg-[#1e2a24] px-4 py-3 text-[13px] leading-[1.45] text-verified">
               <span>●</span> {t.alarmSet(fmtTime(computed.goAt))}
             </div>
           ) : (
