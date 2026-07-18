@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CAL_WEEK, type CalCell } from "@/lib/data";
+import { isDemo } from "@/lib/demo";
 
 const POST_STYLES: Record<string, { box: string; title: string; meta: string }> = {
   posted: { box: "bg-verified-tint", title: "text-verified-deep", meta: "text-verified-deep" },
@@ -31,11 +32,17 @@ function Cell({ cell }: { cell: CalCell }) {
 }
 
 export default function CalendarPage() {
+  // Real account starts with an empty week (keep the day scaffold, drop the
+  // sample posts); demo mode shows the seeded schedule.
+  const week: CalCell[] = isDemo()
+    ? CAL_WEEK
+    : CAL_WEEK.map((c) => ({ label: c.label, today: c.today }));
+
   return (
     <div className="px-[34px] py-8">
       <div className="overflow-hidden rounded-panel border border-muted-line bg-paper">
         <div className="grid grid-cols-5 gap-px bg-muted-line">
-          {CAL_WEEK.map((cell, i) => (
+          {week.map((cell, i) => (
             <Cell key={i} cell={cell} />
           ))}
         </div>

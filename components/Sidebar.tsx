@@ -17,6 +17,7 @@ import {
 import { STREAK_DAYS } from "@/lib/data";
 import { loadProfile } from "@/lib/profile";
 import SignOutButton from "@/components/SignOutButton";
+import DemoToggle from "@/components/DemoToggle";
 
 // Coach Bob is the main feature — the coaching core leads, the LinkedIn
 // content tools sit underneath as a supporting toolbox.
@@ -44,7 +45,7 @@ function initials(name: string) {
   );
 }
 
-export default function Sidebar({ userEmail }: { userEmail?: string }) {
+export default function Sidebar({ userEmail, demo = false }: { userEmail?: string; demo?: boolean }) {
   const pathname = usePathname();
   const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
@@ -106,12 +107,13 @@ export default function Sidebar({ userEmail }: { userEmail?: string }) {
         <div className="rounded-card bg-ink p-4">
           <div className="flex items-center gap-2 font-display text-[15px] font-bold text-white">
             <span className="h-2 w-2 rounded-full bg-white" />
-            {STREAK_DAYS}-day streak
+            {demo ? `${STREAK_DAYS}-day streak` : "Start your streak"}
           </div>
           <div className="mt-2 font-mono text-[10px] tracking-[0.04em] text-onink-faint">
-            POST TODAY TO KEEP IT
+            {demo ? "POST TODAY TO KEEP IT" : "POST TODAY TO BEGIN IT"}
           </div>
         </div>
+        <DemoToggle demo={demo} />
         <div className="flex items-center gap-[10px] px-[6px] py-1">
           <div className="flex h-[34px] w-[34px] flex-none items-center justify-center rounded-full bg-tint-mint font-display text-[13px] font-bold text-olive-deep">
             {initials(displayName)}

@@ -3,6 +3,7 @@ import Sidebar from "@/components/Sidebar";
 import TopBar from "@/components/TopBar";
 import OnboardingGate from "@/components/onboarding/OnboardingGate";
 import { auth, authEnabled } from "@/auth";
+import { isDemo } from "@/lib/demo";
 
 export const dynamic = "force-dynamic";
 
@@ -25,7 +26,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
 
   return (
     <div className="grid h-screen grid-cols-[248px_1fr] overflow-hidden bg-paper text-ink">
-      <Sidebar userEmail={userEmail} />
+      <Sidebar userEmail={userEmail} demo={isDemo()} />
       <main className="flex flex-col overflow-y-auto">
         <TopBar />
         <div className="min-h-0 flex-1">

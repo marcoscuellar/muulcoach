@@ -1,6 +1,20 @@
+import EmptyState from "@/components/EmptyState";
 import { POSTS_PER_WEEK, REACH_BY_TYPE, ANALYTICS_HEAT } from "@/lib/data";
+import { isDemo } from "@/lib/demo";
 
 export default function AnalyticsPage() {
+  if (!isDemo()) {
+    return (
+      <div className="px-[34px] py-8">
+        <EmptyState
+          title="No analytics yet"
+          sub="Post something and Coach Bob starts tracking your reach, consistency, and what's working — it all shows up here."
+          cta={{ href: "/composer", label: "Draft a post" }}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col gap-4 px-[34px] py-8">
       {/* Engagement line + consistency heatmap */}

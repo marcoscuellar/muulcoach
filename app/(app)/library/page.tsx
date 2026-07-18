@@ -1,5 +1,7 @@
 import Tag from "@/components/Tag";
+import EmptyState from "@/components/EmptyState";
 import { LIBRARY } from "@/lib/data";
+import { isDemo } from "@/lib/demo";
 
 const STATUS_COLOR: Record<string, string> = {
   POSTED: "text-verified-deep",
@@ -8,10 +10,24 @@ const STATUS_COLOR: Record<string, string> = {
 };
 
 export default function LibraryPage() {
+  const posts = isDemo() ? LIBRARY : [];
+
+  if (posts.length === 0) {
+    return (
+      <div className="px-[34px] py-8">
+        <EmptyState
+          title="No posts yet"
+          sub="Everything you draft and publish with Coach Bob lands here — ready to remix."
+          cta={{ href: "/composer", label: "Draft your first post" }}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="px-[34px] py-8">
       <div className="grid grid-cols-3 gap-4">
-        {LIBRARY.map((p, i) => (
+        {posts.map((p, i) => (
           <div key={i} className="flex flex-col gap-[14px] rounded-card border border-muted-line bg-paper p-[18px]">
             <div className="flex items-center justify-between">
               <Tag kind={p.tagKind}>{p.tag}</Tag>
