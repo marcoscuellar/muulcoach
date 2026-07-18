@@ -76,46 +76,28 @@ export const WingmanIcon = (p: IconProps) => (
   </Base>
 );
 
-/** The Muul chevron mark — momentum + the streak you protect. */
-export function MuulMark({ size = 32, radius = 9 }: { size?: number; radius?: number }) {
-  const chevron = Math.round(size * 0.31);
-  const border = Math.round(chevron * 0.6);
-  return (
-    <div
-      className="flex items-center justify-center bg-ink"
-      style={{ width: size, height: size, borderRadius: radius }}
-    >
-      <div
-        style={{
-          width: 0,
-          height: 0,
-          borderLeft: `${border}px solid transparent`,
-          borderRight: `${border}px solid transparent`,
-          borderBottom: `${chevron}px solid #C4F542`,
-        }}
-      />
-    </div>
-  );
+// Official Coach Bob mark. Brand colors centralized here — change once to recolor.
+const BRAND_INK = "#22282B";
+const BRAND_ACCENT = "#C4F542";
+
+/** The official Coach Bob "b" mark — accent glyph on an ink tile. */
+export function MuulMark({ size = 32 }: { size?: number; radius?: number }) {
+  return <CoachBobMark size={size} square={BRAND_INK} glyph={BRAND_ACCENT} />;
 }
 
-/** Chevron mark on a volt tile (used inside dark coach cards). */
-export function MuulMarkVolt({ size = 26, radius = 7 }: { size?: number; radius?: number }) {
-  const chevron = Math.round(size * 0.31);
-  const border = Math.round(chevron * 0.6);
+/** Inverted mark — ink glyph on an accent tile (used inside dark cards). */
+export function MuulMarkVolt({ size = 26 }: { size?: number; radius?: number }) {
+  return <CoachBobMark size={size} square={BRAND_ACCENT} glyph={BRAND_INK} />;
+}
+
+function CoachBobMark({ size, square, glyph }: { size: number; square: string; glyph: string }) {
   return (
-    <div
-      className="flex items-center justify-center bg-volt"
-      style={{ width: size, height: size, borderRadius: radius }}
-    >
-      <div
-        style={{
-          width: 0,
-          height: 0,
-          borderLeft: `${border}px solid transparent`,
-          borderRight: `${border}px solid transparent`,
-          borderBottom: `${chevron}px solid #22282B`,
-        }}
-      />
-    </div>
+    <svg width={size} height={size} viewBox="0 0 512 512" aria-hidden>
+      <rect width="512" height="512" rx="114.5" fill={square} />
+      <g transform="translate(76.8 92.2) scale(3.3792)">
+        <path d="M66 44 A11 11 0 1 1 66 66" fill="none" stroke={glyph} strokeWidth="6.4" />
+        <rect x="26" y="37" width="40" height="35" rx="8" fill={glyph} />
+      </g>
+    </svg>
   );
 }
