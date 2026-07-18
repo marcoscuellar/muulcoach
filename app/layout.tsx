@@ -1,26 +1,28 @@
 import type { Metadata } from "next";
-import { Instrument_Sans, Space_Mono, Archivo_Black } from "next/font/google";
+import { Bricolage_Grotesque, Inter, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
-// Archivo Black is the app-wide display face — one heavy, commanding weight.
-const archivo = Archivo_Black({
+// Bricolage Grotesque — the display face for headlines + brand. Bold, friendly,
+// a little unconventional without being childish. Variable weights 400–800.
+const display = Bricolage_Grotesque({
   subsets: ["latin"],
-  weight: ["400"],
+  weight: ["400", "600", "700", "800"],
   variable: "--font-display",
   display: "swap",
 });
 
-const instrumentSans = Instrument_Sans({
+// Inter — clean, highly readable face for body copy and UI.
+const inter = Inter({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  style: ["normal", "italic"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-instrument-sans",
   display: "swap",
 });
 
-const spaceMono = Space_Mono({
+// IBM Plex Mono — small uppercase labels, eyebrows, and data.
+const mono = IBM_Plex_Mono({
   subsets: ["latin"],
-  weight: ["400", "700"],
+  weight: ["400", "500", "600"],
   variable: "--font-space-mono",
   display: "swap",
 });
@@ -33,7 +35,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${archivo.variable} ${instrumentSans.variable} ${spaceMono.variable}`}>
+    <html lang="en" className={`${display.variable} ${inter.variable} ${mono.variable}`}>
       <body>{children}</body>
     </html>
   );
