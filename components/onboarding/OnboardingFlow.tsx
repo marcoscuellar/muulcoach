@@ -43,7 +43,7 @@ export default function OnboardingFlow() {
         {/* Progress */}
         <div className="mb-6 flex items-center gap-2">
           <MuulMark size={28} radius={8} />
-          <span className="font-display text-[17px] font-bold tracking-[-0.02em]">Muul</span>
+          <span className="font-display text-[17px] font-bold tracking-[-0.02em]">Coach Bob</span>
           <div className="ml-auto flex gap-[6px]">
             {[0, 1, 2, 3].map((i) => (
               <span

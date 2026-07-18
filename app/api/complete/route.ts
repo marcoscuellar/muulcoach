@@ -10,7 +10,7 @@ type Body = {
 };
 
 const KEY_MISSING =
-  "Muul isn't connected to its AI yet. Add an ANTHROPIC_API_KEY to the server environment to turn drafting and coaching on.";
+  "Coach Bob isn't connected to his AI yet. Add an ANTHROPIC_API_KEY to the server environment to turn drafting and coaching on.";
 
 export async function POST(req: NextRequest) {
   if (!hasApiKey()) {
@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
   } catch (err) {
     console.error("[/api/complete]", err);
     return NextResponse.json(
-      { error: "Muul couldn’t reach its AI just now. Try again in a moment." },
+      { error: "Coach Bob couldn’t reach his AI just now. Try again in a moment." },
       { status: 502 },
     );
   }

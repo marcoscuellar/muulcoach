@@ -23,7 +23,7 @@ function Cell({ cell }: { cell: CalCell }) {
           href="/composer"
           className="mt-[10px] block w-full rounded-[9px] border-[1.5px] border-dashed border-muted-soft bg-transparent px-2 py-[9px] text-center font-display text-[12px] font-semibold text-muted-fog"
         >
-          + Draft with Muul
+          + Draft with Coach Bob
         </Link>
       )}
     </div>

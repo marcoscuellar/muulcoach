@@ -2,7 +2,7 @@
   "name": "muul",
   "version": "0.1.0",
   "private": true,
-  "description": "Muul — LinkedIn content calendar & AI coach. Show up. Do the thing. Every damn day.",
+  "description": "Coach Bob — your adaptive accountability coach. Show up. Do the thing. Every damn day.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

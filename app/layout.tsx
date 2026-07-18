@@ -26,9 +26,9 @@ const spaceMono = Space_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Muul — Show up. Do the thing. Every damn day.",
+  title: "Coach Bob — Show up. Do the thing. Every damn day.",
   description:
-    "Muul is the coach that gets you to your goals one action at a time — starting with posting on LinkedIn in your authentic expert voice, and holding you to a daily streak.",
+    "Coach Bob is the accountability coach that gets you to your goals one action at a time — builds the plan, keeps you moving, and won't let you snooze on it.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -7,10 +7,10 @@ import SupportWidget from "@/components/SupportWidget";
 
 const TITLE_MAP: Record<string, [string, string]> = {
   "/": ["Home", "Your streak, your queue, your next move"],
-  "/composer": ["Composer", "Muul writes it. You approve it."],
+  "/composer": ["Composer", "Coach Bob writes it. You approve it."],
   "/trending": ["Trending", "What’s hot right now + your daily brief"],
   "/calendar": ["Calendar", "Week of July 13"],
-  "/coach": ["Coach Bob", "Your coach's office — talk it out"],
+  "/coach": ["Chat", "Coach Bob's office — talk it out"],
   "/goals": ["Goals", "Coach Bob's plan — max 3 at a time"],
   "/analytics": ["Analytics", "Proof the streak is working"],
   "/library": ["Library", "Every post you’ve shipped"],
@@ -18,7 +18,7 @@ const TITLE_MAP: Record<string, [string, string]> = {
 
 export default function TopBar() {
   const pathname = usePathname();
-  const [title, sub] = TITLE_MAP[pathname] ?? ["Muul", "Show up. Do the thing."];
+  const [title, sub] = TITLE_MAP[pathname] ?? ["Coach Bob", "Show up. Do the thing."];
   const showNewBtn = pathname !== "/composer";
 
   return (

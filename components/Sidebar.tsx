@@ -22,7 +22,7 @@ import SignOutButton from "@/components/SignOutButton";
 // content tools sit underneath as a supporting toolbox.
 const PRIMARY_NAV = [
   { href: "/", label: "Home", Icon: HomeIcon },
-  { href: "/coach", label: "Coach Bob", Icon: CoachIcon, star: true },
+  { href: "/coach", label: "Chat", Icon: CoachIcon, star: true },
   { href: "/goals", label: "Goals", Icon: WingmanIcon },
 ];
 const CONTENT_NAV = [
@@ -61,7 +61,7 @@ export default function Sidebar({ userEmail }: { userEmail?: string }) {
     <aside className="flex flex-col gap-[26px] border-r border-muted-line bg-paper px-4 py-[22px]">
       <div className="flex items-center gap-[11px] px-2 py-1">
         <MuulMark />
-        <span className="font-display text-[19px] font-bold tracking-[-0.02em]">Muul</span>
+        <span className="font-display text-[19px] font-bold tracking-[-0.02em]">Coach Bob</span>
       </div>
 
       <nav className="flex flex-col gap-1">

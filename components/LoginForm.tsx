@@ -26,7 +26,7 @@ export default function LoginForm() {
       <div className="w-full max-w-[420px]">
         <div className="mb-6 flex items-center gap-2">
           <MuulMark size={30} radius={8} />
-          <span className="font-display text-[19px] font-bold tracking-[-0.02em]">Muul</span>
+          <span className="font-display text-[19px] font-bold tracking-[-0.02em]">Coach Bob</span>
         </div>
 
         <div className="rounded-panel border border-muted-line bg-paper p-8">

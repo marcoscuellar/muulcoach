@@ -60,7 +60,7 @@ export default function Composer() {
       });
       setDraft(text.trim());
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Muul couldn’t draft that just now. Try again in a moment.");
+      setError(e instanceof Error ? e.message : "Coach Bob couldn’t draft that just now. Try again in a moment.");
     } finally {
       setLoading(false);
     }
@@ -82,7 +82,7 @@ export default function Composer() {
       });
       setDraft(text.trim());
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Muul couldn’t revise that just now. Try again.");
+      setError(e instanceof Error ? e.message : "Coach Bob couldn’t revise that just now. Try again.");
     } finally {
       setLoading(false);
     }
@@ -140,7 +140,7 @@ export default function Composer() {
           <textarea
             value={idea}
             onChange={(e) => setIdea(e.target.value)}
-            placeholder="A rough thought, a client win, a lesson, a hot take. Muul turns it into a post that sounds like you."
+            placeholder="A rough thought, a client win, a lesson, a hot take. Coach Bob turns it into a post that sounds like you."
             className="min-h-[140px] w-full resize-y rounded-xl border-[1.5px] border-muted-line bg-paper p-[14px] text-[15px] leading-[1.5] text-ink"
           />
         </div>
@@ -158,7 +158,7 @@ export default function Composer() {
           className="mt-auto rounded-xl border-none px-[15px] py-[15px] font-display text-[16px] font-bold text-ink"
           style={{ background: loading ? "#d3f4ec" : "#C4F542", cursor: loading ? "default" : "pointer" }}
         >
-          {loading ? "Muul is drafting…" : draft ? "Draft a fresh version" : "Draft my post"}
+          {loading ? "Coach Bob is drafting…" : draft ? "Draft a fresh version" : "Draft my post"}
         </button>
       </div>
 
@@ -183,14 +183,14 @@ export default function Composer() {
               <div>
                 <div className="font-display text-[15px] font-semibold">{DEFAULT_AUTHOR_NAME}</div>
                 <div className="text-[13px] text-muted-fog">{DEFAULT_AUTHOR_TITLE}</div>
-                <div className="mt-[1px] font-mono text-[11px] text-muted-sage">now · edited by Muul</div>
+                <div className="mt-[1px] font-mono text-[11px] text-muted-sage">now · edited by Coach Bob</div>
               </div>
             </div>
             <div className="relative min-h-[180px] px-5 pb-2">
               {loading && (
                 <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-white/85">
                   <div className="h-[34px] w-[34px] animate-muulspin rounded-full border-[3px] border-tint-mint border-t-olive" />
-                  <span className="font-mono text-[12px] text-olive">MUUL IS DRAFTING…</span>
+                  <span className="font-mono text-[12px] text-olive">COACH BOB IS DRAFTING…</span>
                 </div>
               )}
               {hasDraft && (
@@ -200,7 +200,7 @@ export default function Composer() {
                 <div className="flex flex-col items-center justify-center px-5 py-[34px] text-center text-muted-sage">
                   <ComposeIcon size={34} className="mb-[14px]" style={{ stroke: "#c1c9b5", strokeWidth: 1.6 }} />
                   <div className="max-w-[260px] text-[14px] leading-[1.5]">
-                    Pick an angle, drop in a thought, and Muul writes the post for you.
+                    Pick an angle, drop in a thought, and Coach Bob writes the post for you.
                   </div>
                 </div>
               )}
@@ -215,7 +215,7 @@ export default function Composer() {
 
           {hasDraft && (
             <div className="mt-5">
-              <div className="mb-3 font-mono text-[11px] text-olive">MUUL, MAKE IT…</div>
+              <div className="mb-3 font-mono text-[11px] text-olive">COACH BOB, MAKE IT…</div>
               <div className="flex flex-wrap gap-[10px]">
                 {REFINES.map((r) => (
                   <button
