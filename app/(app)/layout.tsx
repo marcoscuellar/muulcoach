@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import Sidebar from "@/components/Sidebar";
 import TopBar from "@/components/TopBar";
 import OnboardingGate from "@/components/onboarding/OnboardingGate";
+import SyncProvider from "@/components/SyncProvider";
 import { auth, authEnabled } from "@/auth";
 import { isDemo } from "@/lib/demo";
 
@@ -26,6 +27,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
 
   return (
     <div className="grid h-screen grid-cols-[248px_1fr] overflow-hidden bg-paper text-ink">
+      <SyncProvider authed={Boolean(userEmail)} />
       <Sidebar userEmail={userEmail} demo={isDemo()} />
       <main className="flex flex-col overflow-y-auto">
         <TopBar />

@@ -13,6 +13,7 @@ import {
   type DepartureAlarm,
 } from "@/lib/wingman";
 import { loadProfile, COACH_NAME, type Profile } from "@/lib/profile";
+import { pushUserData, SYNCED_EVENT } from "@/lib/sync";
 import GoalComposer from "./GoalComposer";
 import GoalCard from "./GoalCard";
 import CalibrationModal from "./CalibrationModal";
@@ -56,15 +57,32 @@ export default function WingmanBoard() {
     setHydrated(true);
   }, []);
 
-  // ---- Persist ----------------------------------------------------------
+  // ---- Persist (localStorage + account sync) ----------------------------
   useEffect(() => {
     if (!hydrated) return;
+    const store = { goals, alarms, updatedAt: Date.now() };
     try {
-      localStorage.setItem(WINGMAN_STORAGE_KEY, JSON.stringify({ goals, alarms }));
+      localStorage.setItem(WINGMAN_STORAGE_KEY, JSON.stringify(store));
     } catch {
       /* ignore */
     }
+    pushUserData("wingman", store); // cross-device (no-op when signed out)
   }, [goals, alarms, hydrated]);
+
+  // When the account copy is pulled in on load, adopt it into state.
+  useEffect(() => {
+    const reread = () => {
+      try {
+        const raw = JSON.parse(localStorage.getItem(WINGMAN_STORAGE_KEY) || "{}");
+        if (Array.isArray(raw.goals)) setGoals(raw.goals);
+        if (Array.isArray(raw.alarms)) setAlarms(raw.alarms);
+      } catch {
+        /* ignore */
+      }
+    };
+    window.addEventListener(SYNCED_EVENT, reread);
+    return () => window.removeEventListener(SYNCED_EVENT, reread);
+  }, []);
 
   // Re-evaluate "stuck" state on a slow interval so audits surface live.
   useEffect(() => {

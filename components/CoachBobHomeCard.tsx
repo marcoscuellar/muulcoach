@@ -5,6 +5,7 @@ import Link from "next/link";
 import { MuulMarkVolt } from "@/components/icons";
 import { loadProfile, COACH_NAME, type Profile } from "@/lib/profile";
 import { loadGoals, isStuck, type Goal } from "@/lib/wingman";
+import { SYNCED_EVENT } from "@/lib/sync";
 
 // Coach Bob on Home — he's present across the app, not siloed in one tab.
 // Reads the coaching profile + goals and surfaces the ONE next move.
@@ -13,8 +14,13 @@ export default function CoachBobHomeCard() {
   const [goals, setGoals] = useState<Goal[]>([]);
 
   useEffect(() => {
-    setProfile(loadProfile());
-    setGoals(loadGoals());
+    const refresh = () => {
+      setProfile(loadProfile());
+      setGoals(loadGoals());
+    };
+    refresh();
+    window.addEventListener(SYNCED_EVENT, refresh);
+    return () => window.removeEventListener(SYNCED_EVENT, refresh);
   }, []);
 
   const active = goals.filter((g) => g.state === "active" && !g.done);

@@ -10,6 +10,8 @@
 // Persona: Direct, Empathetic, Action-Oriented. Peer-to-peer, never clinical.
 // ===========================================================================
 
+import { pushUserData } from "@/lib/sync";
+
 export const WINGMAN_STORAGE_KEY = "muul-wingman-v1";
 
 // ---- Types ----------------------------------------------------------------
@@ -92,8 +94,13 @@ export function addGoal(goal: Goal): void {
   if (typeof window === "undefined") return;
   try {
     const store = JSON.parse(localStorage.getItem(WINGMAN_STORAGE_KEY) || "{}");
-    store.goals = [...(Array.isArray(store.goals) ? store.goals : []), goal];
-    localStorage.setItem(WINGMAN_STORAGE_KEY, JSON.stringify(store));
+    const next = {
+      ...store,
+      goals: [...(Array.isArray(store.goals) ? store.goals : []), goal],
+      updatedAt: Date.now(),
+    };
+    localStorage.setItem(WINGMAN_STORAGE_KEY, JSON.stringify(next));
+    pushUserData("wingman", next); // sync to the account (no-op when signed out)
   } catch {
     /* ignore */
   }
